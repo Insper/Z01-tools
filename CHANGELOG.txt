@@ -1,0 +1,19 @@
+o Interface GUI
+  - (13/04/18) Edu
+     - Arrumado bug no qual instruções de JUMP pulam para a linha incorreta
+     - O Simulador agora não executa a primeira linha automaticamente
+     - Verifica se versão do Python executada é pelo menos Python 3
+     - O Simulador agora não necessita de Python 3.6 (removido dependências f-string)
+     - Incluido indicadores SP / LCL / THAT / ARG entre outros na RAM
+     - Trocado imagem da ALU - pendente arrumar transparência
+
+
+o Assembler
+  - (10/04/18) Rafa
+     Possibilitei escolher a origem do dado no jump
+     exe : jge %S
+    
+  - (11/04/18) Rafa
+     O assembler tinha um bug que não suportava um label
+     como primeira instrução.
+    
