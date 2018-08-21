@@ -44,12 +44,13 @@ def openConfigFile(testDir):
 
 class vhdlScript(object):
 
-    def __init__(self):
+    def __init__(self, log):
         # config
         self.cli = VUnitCLI()
         self.args = self.cli.parse_args()
         self.args.num_threads = 4
-        self.ui = VUnit.from_args(self.args)
+        self.args.xunit_xml = log
+        self.ui = VUnit.from_args(args=self.args)
         self.lib = self.ui.add_library("lib")
 
     def add_src_lib(self, path):
