@@ -65,7 +65,7 @@ class report(object):
             log = p.text
             testName = testName[7:]
             self.testData.append({'name': testName, 'ts': str(ts), 'status':status})
-            return(error)
+        return(error)
 
     def send(self):
         for n in self.testData:
