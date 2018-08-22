@@ -80,4 +80,4 @@ class vhdlScript(object):
         self.lib.add_source_files(f)
 
     def run(self):
-        self.ui.main()
+        self.ui._main_run()
