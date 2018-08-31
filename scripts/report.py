@@ -13,6 +13,7 @@ import xml.etree.ElementTree as ET
 import time
 from firebase import firebase
 import json
+import os
 
 TOOLSPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 
@@ -27,6 +28,9 @@ class report(object):
         self.userId = self.userID()
         self.connection = self.openFirebase()
         self.testData = []
+        self.Travis = False
+        if os.environ.get('Travis') is not None:
+            self.Travis = True
 
     def openFirebase(self):
         connection = firebase.FirebaseApplication('https://elementos-10281.firebaseio.com/', authentication=None)
@@ -64,12 +68,15 @@ class report(object):
             p = n.find('system-out')
             log = p.text
             testName = testName[7:]
-            self.testData.append({'name': testName, 'ts': str(ts), 'status':status})
+            self.testData.append({'name': testName, 'ts': str(ts), 'status':status, 'Travis':str(self.Travis)})
         return(error)
 
     def send(self):
         for n in self.testData:
-            url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
+            if self.Travis:
+                url = '/'+self.userId+'/'+'Travis/'+self.proj+'/'+n['name']+'/'+n['ts']
+            else:
+                url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
             result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
             print('.. .', end='', flush=True)
         print('')
