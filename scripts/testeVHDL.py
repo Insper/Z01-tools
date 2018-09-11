@@ -75,6 +75,9 @@ class vhdlScript(object):
                 if l.strip():
                     if '#' not in l:
                         self.addSrcFile(tst + "tst/tb_" + l[:-1])
+            return(True)
+        else:
+            return(False)
 
     def addSrcFile(self, f):
         self.lib.add_source_files(f)
