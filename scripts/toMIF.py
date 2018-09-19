@@ -39,7 +39,7 @@ def toMIF(mem, mif):
         fw.write("-- originated from"+mem+""+END)
         fw.write("-- to be used on ALTERA FPGAs"+END+END)
 
-        fw.write("WIDTH=16;"+END)
+        fw.write("WIDTH=18;"+END)
         fw.write("DEPTH={};".format(num_lines)+END)
         fw.write(""+END)
         fw.write("ADDRESS_RADIX=UNS;"+END)

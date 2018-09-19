@@ -25,10 +25,25 @@ def callJava(jar, nasm, hack):
     proc = subprocess.Popen(command, shell=True)
     err = proc.wait()
     return(err)
-    #(out, err) = proc.communicate()
-   # os.system("java -jar " + jar + " -i " + nasm + " -o " + hack)
+
+
+def clearbin(hack):
+    test = os.listdir(dir_name)
+
+    for item in test:
+        if item.endswith(".zip"):
+            os.remove(os.path.join(dir_name, item))
+
+    try:
+        print(hack)
+        shutil.rmtree(hack)
+    except:
+        pass
 
 def assembler(jar, nasm, hack, mif):
+
+    error = 0
+    log = []
 
     pwd = os.path.dirname(os.path.abspath(__file__))
 
@@ -49,16 +64,23 @@ def assembler(jar, nasm, hack, mif):
                     nNasm = nasm+filename
                     if not os.path.basename(nNasm).startswith('.'):
                         print("Compiling {} to {}".format(os.path.basename(nNasm), os.path.basename(nHack)))
-                        callJava(jar, nNasm, nHack)
+                        if callJava(jar, nNasm, nHack) is not 0:
+                            status = 'true'
+                            error  = -1
                         if mif:
+                            status = 'false'
                             toMIF(nHack, nMif)
+                        log.append({'name': filename, 'status': status})
+            return(error, log)
         else:
             logError("output must be folder for folder input!")
+            return(-1)
     else:
         hack = hack+".hack"
         callJava(jar, nasm, hack)
         if(mif):
             toMIF(hack, os.path.splitext(hack)[0]+".mif")
+    return(0)
 
 
 if __name__ == "__main__":

@@ -93,7 +93,7 @@ class AppMain(Ui_MainWindow):
         self.config_dialog_ui = config_dialog.Ui_Dialog()
         self.config_dialog_ui.setupUi(self.config_dialog)
         self.config_dialog_ui.assemblerLineEdit.setText("../jar/Z01-Assembler.jar")
-        self.config_dialog_ui.rtlLineEdit.setText("../Z01-Simulator-rtl-2/")
+        self.config_dialog_ui.rtlLineEdit.setText("../Z01-Simulator-rtl/")
 
     def setup_clean_views(self, table, rows=100, caption="Dados", line_header=None):
         model = QStandardItemModel(rows, 1, self.window)
@@ -275,7 +275,7 @@ class AppMain(Ui_MainWindow):
             index = self.ram_model.index(addr, 0)
             last_pc_counter = int(self.last_step["pcout"], 2) - 1
 
-            if int(step["writeM"]) == 0 and int(step["s_muxALUI_A"]) == 1 and int(self.last_step["s_muxALUI_A"]) == 0:
+            if int(step["writeM"]) == 0 and int(step["c_muxALUI_A"]) == 1 and int(self.last_step["c_muxALUI_A"]) == 0:
                self.ramView.setCurrentIndex(index)
 
             if int(step["writeM"]) == 1:

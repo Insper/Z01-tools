@@ -4,7 +4,7 @@
 -- originated fromtemp//ram_in.mif.tmp
 -- to be used on ALTERA FPGAs
 
-WIDTH=16;
+WIDTH=18;
 DEPTH=10000;
 
 ADDRESS_RADIX=UNS;

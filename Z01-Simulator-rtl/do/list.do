@@ -5,8 +5,8 @@ add list /computador_tb/c1/MAIN_CPU/pcout
 add list /computador_tb/c1/MAIN_CPU/s_regDout
 add list /computador_tb/c1/MAIN_CPU/s_regSout
 add list /computador_tb/c1/MAIN_CPU/s_regAout
-add list /computador_tb/c1/MAIN_CPU/s_muxALUI_A
-add list /computador_tb/c1/MAIN_CPU/s_muxSD_ALU
+add list /computador_tb/c1/MAIN_CPU/c_muxALUI_A
+add list /computador_tb/c1/MAIN_CPU/c_muxSD_ALU
 add list /computador_tb/c1/MAIN_CPU/outM
 add list /computador_tb/c1/MAIN_CPU/writeM
 add list /computador_tb/c1/MAIN_CPU/inM

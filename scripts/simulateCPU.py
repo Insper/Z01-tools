@@ -33,8 +33,7 @@ OUT_SIM_LST = ""
 PATH_VSIM =  os.path.join(os.environ.get('VUNIT_MODELSIM_PATH'), "vsim")
 
 # Files used on this simulation
-PATH_WORK       = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..", "Z01-Simulator-rtl-2")
-
+PATH_WORK       = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..", "Z01-Simulator-rtl")
 
 END = "\n"
 
@@ -60,6 +59,7 @@ def rmFile(f):
 # configuracao.
 def simulateFromTestDir(testDir, hackDir, gui, verbose, rtlDir=PATH_WORK):
 
+    #
     configFile = testDir+CONFIG_FILE
 
     # caminho do arquivo de configuracao
@@ -112,15 +112,16 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, rtlDir=PATH_WORK):
                                     print(ramOut)
                                 simulateCPU(ramIn, mif, ramOut, sTime, gui, verbose, rtlDir=rtlDir)
                                 toc = time.time()
-                                print(" ( {0:.2f} seconds)".format(toc-tic))
+                                print(" ({0:.2f} seconds)".format(toc-tic))
                         else:
                                 logError("Arquivo de simulacao não encontrado :")
                                 logError("                - {}".format(ramIn))
-                                return(1)
+                                return(-1)
             else:
                 logError("Arquivo hack não encontrado :")
                 logError("                - {}".format(mif))
-
+                return(-1)
+    return(0)
 
 
 def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=PATH_WORK):

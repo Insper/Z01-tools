@@ -21,7 +21,7 @@ def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 class report(object):
-    def __init__(self,logFile, proj):
+    def __init__(self, logFile, proj):
         self.proj = proj
         self.logFile = logFile
         self.idFile = os.path.join(TOOLSPATH,"user.txt")
@@ -68,8 +68,19 @@ class report(object):
             p = n.find('system-out')
             log = p.text
             testName = testName[7:]
-            self.testData.append({'name': testName, 'ts': str(ts), 'status':status, 'Travis':str(self.Travis)})
+            self.testData.append({'name': testName, 'ts': str(ts), 'status':status})
         return(error)
+
+    def assemblyTeste(self, logFile):
+        ts = int(time.time())
+        for log in logFile:
+            self.testData.append({'name': log['name'], 'ts': str(ts), 'status': log['resultado']     })
+
+    def assembler(self, logFile):
+        ts = int(time.time())
+        for log in logFile:
+            self.testData.append({'name': log['name'], 'ts': str(ts), 'status': log['resultado']     })
+
 
     def send(self):
         for n in self.testData:
