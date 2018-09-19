@@ -28,14 +28,7 @@ def callJava(jar, nasm, hack):
 
 
 def clearbin(hack):
-    test = os.listdir(dir_name)
-
-    for item in test:
-        if item.endswith(".zip"):
-            os.remove(os.path.join(dir_name, item))
-
     try:
-        print(hack)
         shutil.rmtree(hack)
     except:
         pass
