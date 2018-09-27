@@ -84,43 +84,44 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, rtlDir=PATH_WORK):
         return(1)
 
     for l in f:
-        if (l.strip()[0] != '#') or (not l.strip()):
-            # pega parametros e atribui caminhos globais
-            # par[0] : Nome do teste (subpasta)
-            # par[1] : quantidade de testes a serem executados
-            # par[2] : tempo de simulação em ns
-            par = l.rstrip().split();
-            # nome do arquivo
-            name = par[0]
-            # tempo total de simulacao
-            sTime = int(par[2])
-            # paths
-            mif = hackDir+name+".mif"
-            # verifica se arquivo existe
-            if os.path.isfile(mif):
-                # simulate
-                for i in range(0, int(par[1])):
-                        # usar join ?
-                        ramIn = pwd+TST_DIR+name+"/"+name+"{}".format(i) + RAM_INIT_FILE
-                        ramOut = pwd+TST_DIR+name+"/"+name+str(i) + RAM_END_SIMU_FILE
-                        print("Simulating " + os.path.relpath(mif) + " teste : " + str(i))
-                        if os.path.isfile(ramIn):
-                                tic = time.time()
-                                if verbose is True :
-                                    print(ramIn)
-                                    print(mif)
-                                    print(ramOut)
-                                simulateCPU(ramIn, mif, ramOut, sTime, gui, verbose, rtlDir=rtlDir)
-                                toc = time.time()
-                                print(" ({0:.2f} seconds)".format(toc-tic))
-                        else:
-                                logError("Arquivo de simulacao não encontrado :")
-                                logError("                - {}".format(ramIn))
-                                return(-1)
-            else:
-                logError("Arquivo hack não encontrado :")
-                logError("                - {}".format(mif))
-                return(-1)
+        if len(l.strip()):
+            if (l.strip()[0] != '#'):
+                # pega parametros e atribui caminhos globais
+                # par[0] : Nome do teste (subpasta)
+                # par[1] : quantidade de testes a serem executados
+                # par[2] : tempo de simulação em ns
+                par = l.rstrip().split();
+                # nome do arquivo
+                name = par[0]
+                # tempo total de simulacao
+                sTime = int(par[2])
+                # paths
+                mif = hackDir+name+".mif"
+                # verifica se arquivo existe
+                if os.path.isfile(mif):
+                    # simulate
+                    for i in range(0, int(par[1])):
+                            # usar join ?
+                            ramIn = pwd+TST_DIR+name+"/"+name+"{}".format(i) + RAM_INIT_FILE
+                            ramOut = pwd+TST_DIR+name+"/"+name+str(i) + RAM_END_SIMU_FILE
+                            print("Simulating " + os.path.relpath(mif) + " teste : " + str(i))
+                            if os.path.isfile(ramIn):
+                                    tic = time.time()
+                                    if verbose is True :
+                                        print(ramIn)
+                                        print(mif)
+                                        print(ramOut)
+                                    simulateCPU(ramIn, mif, ramOut, sTime, gui, verbose, rtlDir=rtlDir)
+                                    toc = time.time()
+                                    print(" ({0:.2f} seconds)".format(toc-tic))
+                            else:
+                                    logError("Arquivo de simulacao não encontrado :")
+                                    logError("                - {}".format(ramIn))
+                                    return(-1)
+                else:
+                    logError("Arquivo hack não encontrado :")
+                    logError("                - {}".format(mif))
+                    return(-1)
     return(0)
 
 
