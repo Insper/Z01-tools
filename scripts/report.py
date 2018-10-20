@@ -14,6 +14,7 @@ import time
 from firebase import firebase
 import json
 import os
+from joblib import Parallel, delayed
 
 TOOLSPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 
@@ -33,6 +34,7 @@ class report(object):
             self.Travis = True
 
     def openFirebase(self):
+#        authentication = firebase.FirebaseAuthentication('InsperComp', 'elementosdesistemas@gmail.com', extra={'id': 0})
         connection = firebase.FirebaseApplication('https://elementos-10281.firebaseio.com/', authentication=None)
         return(connection)
 
@@ -46,7 +48,7 @@ class report(object):
         #    f.write(userid)
         #    print("----")
         #f.close()
-        return("GrupoA")
+        return("Professor")
 
     def hw(self):
         tree = ET.parse(self.logFile)
@@ -74,13 +76,35 @@ class report(object):
     def assemblyTeste(self, logFile):
         ts = int(time.time())
         for log in logFile:
-            self.testData.append({'name': log['name'], 'ts': str(ts), 'status': log['resultado']     })
+            self.testData.append({'name': log['name'], 'ts': str(ts), 'status': log['resultado'] })
 
     def assembler(self, logFile):
+        cnt = 0
         ts = int(time.time())
-        for log in logFile:
-            self.testData.append({'name': log['name'], 'ts': str(ts), 'status': log['resultado']     })
+        try:
+            f = open(logFile, 'r')
+        except IOError:
+            return(1)
+        for line in f:
+            s = line.split()
+            print(line[:-1])
+            self.testData.append({'name': s[2], 'ts': str(ts), 'status': s[0] })
+            if s[0] == 'FAIL':
+                cnt = cnt + 1
+        return(cnt)
 
+    def singleSend(self, n):
+ #       n = self.testData[i]
+        if self.Travis:
+            url = '/'+self.userId+'/'+'Travis/'+self.proj+'/'+n['name']+'/'+n['ts']
+        else:
+            url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
+            self.connection
+        result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
+        print('.. .', end='', flush=True)
+
+    def parSend(self):
+        Parallel(n_jobs=4)(delayed(self.singleSend)(n) for n in self.testData)
 
     def send(self):
         for n in self.testData:
@@ -88,6 +112,7 @@ class report(object):
                 url = '/'+self.userId+'/'+'Travis/'+self.proj+'/'+n['name']+'/'+n['ts']
             else:
                 url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
+                self.connection
             result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
             print('.. .', end='', flush=True)
         print('')

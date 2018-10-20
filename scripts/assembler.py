@@ -66,14 +66,15 @@ def assembler(jar, nasm, hack, mif):
                         log.append({'name': filename, 'status': status})
             return(error, log)
         else:
+
             logError("output must be folder for folder input!")
-            return(-1)
+            return(-1, log)
     else:
         hack = hack+".hack"
         callJava(jar, nasm, hack)
         if(mif):
             toMIF(hack, os.path.splitext(hack)[0]+".mif")
-    return(0)
+    return(0, log)
 
 
 if __name__ == "__main__":
