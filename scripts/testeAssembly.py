@@ -143,19 +143,20 @@ def compareFromTestDir(testDir):
 
     if f is not False:
         for l in f:
-            if l.strip()[0]!='#':
-                par   = l.rstrip().split();
-                name  = par[0]
-                nTest = int(par[1])
-                for i in range (0, nTest):
-                        nameTest   = name + str(i)
-                        ramEnd     = pwd + "/tst/" + name + "/" + name + "{}".format(i) + RAM_END_FILE
-                        ramEndSimu = pwd + "/tst/" + name + "/" + nameTest + RAM_END_SIMU_FILE
-                        if(os.path.isfile(ramEnd) and os.path.isfile(ramEndSimu)):
-                            rtn = compareRam(nameTest, ramEnd, ramEndSimu)
-                            r = "True" if rtn else "False"
-                            result = {'name':name, 'resultado':rtn, 'teste':i}
-                            log.append(result)
+            if l.strip():
+                if l.strip()[0]!='#':
+                    par   = l.rstrip().split();
+                    name  = par[0]
+                    nTest = int(par[1])
+                    for i in range (0, nTest):
+                            nameTest   = name + str(i)
+                            ramEnd     = pwd + "/tst/" + name + "/" + name + "{}".format(i) + RAM_END_FILE
+                            ramEndSimu = pwd + "/tst/" + name + "/" + nameTest + RAM_END_SIMU_FILE
+                            if(os.path.isfile(ramEnd) and os.path.isfile(ramEndSimu)):
+                                rtn = compareRam(nameTest, ramEnd, ramEndSimu)
+                                r = "True" if rtn else "False"
+                                result = {'name':name, 'resultado':rtn, 'teste':i}
+                                log.append(result)
     else:
         return(-1, result)
 
