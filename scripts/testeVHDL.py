@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 # Curso de Elementos de Sistemas
@@ -83,4 +83,4 @@ class vhdlScript(object):
         self.lib.add_source_files(f)
 
     def run(self):
-        self.ui._main_run()
+        self.ui._main_run(None)
