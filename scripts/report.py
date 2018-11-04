@@ -48,7 +48,7 @@ class report(object):
         #    f.write(userid)
         #    print("----")
         #f.close()
-        return("Professor")
+        return("GrupoA")
 
     def hw(self):
         tree = ET.parse(self.logFile)
