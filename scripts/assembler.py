@@ -8,17 +8,12 @@
 # ou um diretório
 # Possibilita também a geração do .mif
 
-import os,sys
-import argparse
-import subprocess
-import re
-
-TOOLSPATH = os.path.dirname(os.path.abspath(__file__))+"/../"
-
+import os,sys,argparse, subprocess, re
+from config import *
 from toMIF import toMIF
 from log import logError, logAssembler
 
-jar = TOOLSPATH+"jar/Z01-Assembler.jar"
+jar = TOOL_PATH+"jar/Z01-Assembler.jar"
 
 def callJava(jar, nasm, hack):
     command = "java -jar " + jar + " -i " + nasm + " -o " + hack
@@ -26,16 +21,84 @@ def callJava(jar, nasm, hack):
     err = proc.wait()
     return(err)
 
-
 def clearbin(hack):
     try:
         shutil.rmtree(hack)
     except:
         pass
 
-def assembler(jar, nasm, hack, mif):
+def assemblerFromTestDir(jar, testDir, nasmDir, hackDir):
+
+    print("-------------------------")
+    print("- Montando arquivos      ")
+    print("-------------------------")
 
     error = 0
+    log = []
+
+    configFile = testDir+CONFIG_FILE
+
+    # caminho do arquivo de configuracao
+    pwd = os.path.dirname(configFile) + "/"
+
+    os.path.abspath(hackDir)
+    os.path.abspath(configFile)
+
+    # file
+    f = ""
+
+    # Verificando se é diretorio
+    if not os.path.exists(configFile):
+        logError("Favor passar como parametro um diretorio do tipo test")
+        return(1)
+
+    # verifica se exist arquivo de config
+    try:
+        f = open(configFile, 'r')
+    except:
+        logError("Arquivo {} não encontrado".format(CONFIG_FILE))
+        return(1)
+
+    print(" 1/2 Removendo arquivos .hack" )
+    print("  - {}".format(hackDir))
+    clearbin(hackDir)
+
+    print(" 2/2 Gerando arquivos   .hack")
+    print("  - {}".format(nasmDir))
+
+    for l in f:
+        if len(l.strip()):
+            if (l.strip()[0] != '#'):
+                # pega parametros e atribui caminhos globais
+                # par[0] : Nome do teste (subpasta)
+                # par[1] : quantidade de testes a serem executados
+                # par[2] : tempo de simulação em ns
+                par = l.rstrip().split();
+                name = par[0]
+                nasm = nasmDir+name+".nasm"
+                hack = hackDir+name+'.hack'
+                mif  = hackDir+name+".mif"
+
+                if os.path.isfile(nasm):
+                    e, l = assemblerFile(jar, nasm, hack, mif)
+                    log.append(l)
+                    if e > 0:
+                        return ERRO_ASSEMBLER, log
+                else:
+                    logError("Arquivo nasm não encontrado :")
+                    logError("                - {}".format(nasm))
+                    log.append({'name': mif, 'status': 'false'})
+                    return ERRO_ASSEMBLER_FILE, log
+    return ERRO_NONE, log
+
+
+def assemblerAll(jar, nasm, hack, mif):
+
+    print("-------------------------")
+    print("- Montando arquivos      ")
+    print("-------------------------")
+
+    error = -1
     log = []
 
     pwd = os.path.dirname(os.path.abspath(__file__))
@@ -47,34 +110,45 @@ def assembler(jar, nasm, hack, mif):
     if not os.path.exists(os.path.dirname(hack)):
         os.makedirs(os.path.dirname(hack))
 
-    if(os.path.isdir(nasm)) :
-        if(os.path.isdir(hack)) :
+    if(os.path.isdir(nasm)):
+        if(os.path.isdir(hack)):
             for filename in os.listdir(nasm):
+                status = 'true'
                 if filename.endswith("nasm"):
                     #logAssembler(" > "+filename)
                     nHack = hack+filename[:-5]+".hack"
                     nMif  = hack+filename[:-5]+".mif"
                     nNasm = nasm+filename
                     if not os.path.basename(nNasm).startswith('.'):
-                        print("Compiling {} to {}".format(os.path.basename(nNasm), os.path.basename(nHack)))
-                        if callJava(jar, nNasm, nHack) is not 0:
-                            status = 'true'
-                            error  = -1
-                        if mif:
-                            status = 'false'
-                            toMIF(nHack, nMif)
-                        log.append({'name': filename, 'status': status})
-            return(error, log)
+                        e, l = assemblerFile(jar, nNasm, nHack, nMif)
+                        log.append(l)
+                        if e > 0:
+                            return ERRO_ASSEMBLER, log
         else:
-
             logError("output must be folder for folder input!")
-            return(-1, log)
+            return ERRO_ASSEMBLER_FILE, log
+    return ERRO_NONE, log
+
+def assemblerFile(jar, nasm, hack, mif):
+
+    error = ERRO_NONE
+
+    if not os.path.exists(os.path.dirname(hack)):
+        os.makedirs(os.path.dirname(hack))
+
+    hack = hack
+    print("   - {} to {}".format(os.path.basename(nasm), os.path.basename(hack)))
+    if callJava(jar, nasm, hack) is not 0:
+        status = 'Assembler Fail'
+        error  = 1
     else:
-        hack = hack+".hack"
-        callJava(jar, nasm, hack)
-        if(mif):
-            toMIF(hack, os.path.splitext(hack)[0]+".mif")
-    return(0, log)
+        status = 'Assembler Ok'
+        error = 0
+    if mif:
+        toMIF(hack, os.path.splitext(hack)[0]+".mif")
+    log = ({'name': os.path.basename(os.path.splitext(hack)[0]), 'status': status})
+
+    return error, log
 
 
 if __name__ == "__main__":
