@@ -1347,10 +1347,10 @@ R32
 R11
 R12
 Epll
-Z109 w1524747794
+Z109 w1540337967
 R2
 R3
-Z110 d/home/corsi/Dropbox/Insper/3s-ElementoDeSistemas/5-Repositorios/Z01.1-priv/Projetos/Z01-tools/Z01-Simulator-rtl
+Z110 d/home/corsi/work/Z01.1-priv/Projetos/Z01-tools/Z01-Simulator-rtl
 Z111 8Modulos/Dispositivos/PLL/PLL_sim/PLL.vho
 Z112 FModulos/Dispositivos/PLL/PLL_sim/PLL.vho
 l0
@@ -1359,9 +1359,9 @@ V=bNF2]g@dOG`TlQ>M101X1
 !s100 FVjY3:j;NIKmkE_MY1]EV0
 R6
 32
-Z113 !s110 1537368493
+Z113 !s110 1544957993
 !i10b 1
-Z114 !s108 1537368493.000000
+Z114 !s108 1544957993.000000
 Z115 !s90 -reportprogress|300|-work|work|Modulos/Dispositivos/PLL/PLL_sim/PLL.vho|
 Z116 !s107 Modulos/Dispositivos/PLL/PLL_sim/PLL.vho|
 !i113 1
@@ -1386,13 +1386,13 @@ R116
 R11
 R12
 Eram16k
-Z120 w1524175552
-Z121 DPx9 altera_mf 20 altera_mf_components 0 22 m2K6F5NmQKkFhQa^^]15g3
+R109
+Z120 DPx9 altera_mf 20 altera_mf_components 0 22 m2K6F5NmQKkFhQa^^]15g3
 R2
 R3
 R110
-Z122 8Modulos/Dispositivos/RAM/RAM16K.vhd
-Z123 FModulos/Dispositivos/RAM/RAM16K.vhd
+Z121 8Modulos/Dispositivos/RAM/RAM16K.vhd
+Z122 FModulos/Dispositivos/RAM/RAM16K.vhd
 l0
 L43
 V?W3fU8AJPJ2S[;=PMJaMU1
@@ -1402,13 +1402,13 @@ R6
 R113
 !i10b 1
 R114
-Z124 !s90 -work|work|Modulos/Dispositivos/RAM/RAM16K.vhd|
-Z125 !s107 Modulos/Dispositivos/RAM/RAM16K.vhd|
+Z123 !s90 -work|work|Modulos/Dispositivos/RAM/RAM16K.vhd|
+Z124 !s107 Modulos/Dispositivos/RAM/RAM16K.vhd|
 !i113 1
 R11
 R12
 Asyn
-R121
+R120
 R2
 R3
 DEx4 work 6 ram16k 0 22 ?W3fU8AJPJ2S[;=PMJaMU1
@@ -1421,8 +1421,8 @@ R6
 R113
 !i10b 1
 R114
+R123
 R124
-R125
 !i113 1
 R11
 R12
@@ -1431,8 +1431,8 @@ R28
 R2
 R3
 R0
-Z126 8../../E-LogicaSequencial/src/rtl/Ram4K.vhd
-Z127 F../../E-LogicaSequencial/src/rtl/Ram4K.vhd
+Z125 8../../E-LogicaSequencial/src/rtl/Ram4K.vhd
+Z126 F../../E-LogicaSequencial/src/rtl/Ram4K.vhd
 l0
 L8
 V2RJ7Uok0a9@l?<IZKM:hW0
@@ -1470,8 +1470,8 @@ R28
 R2
 R3
 R0
-Z128 8../../E-LogicaSequencial/src/rtl/Ram512.vhd
-Z129 F../../E-LogicaSequencial/src/rtl/Ram512.vhd
+Z127 8../../E-LogicaSequencial/src/rtl/Ram512.vhd
+Z128 F../../E-LogicaSequencial/src/rtl/Ram512.vhd
 l0
 L8
 VXBT5[VikKknDFdaNSFR:72
@@ -1509,8 +1509,8 @@ R28
 R2
 R3
 R0
-Z130 8../../E-LogicaSequencial/src/rtl/Ram64.vhd
-Z131 F../../E-LogicaSequencial/src/rtl/Ram64.vhd
+Z129 8../../E-LogicaSequencial/src/rtl/Ram64.vhd
+Z130 F../../E-LogicaSequencial/src/rtl/Ram64.vhd
 l0
 L8
 VRB5`ZMb2VWX7JTI]b6`]_1
@@ -1548,8 +1548,8 @@ R28
 R2
 R3
 R0
-Z132 8../../E-LogicaSequencial/src/rtl/Ram8.vhd
-Z133 F../../E-LogicaSequencial/src/rtl/Ram8.vhd
+Z131 8../../E-LogicaSequencial/src/rtl/Ram8.vhd
+Z132 F../../E-LogicaSequencial/src/rtl/Ram8.vhd
 l0
 L8
 VJ^dIlVa1jaALNOH@HK];a0
@@ -1587,8 +1587,8 @@ R28
 R2
 R3
 R0
-Z134 8../../E-LogicaSequencial/src/rtl/Register16.vhd
-Z135 F../../E-LogicaSequencial/src/rtl/Register16.vhd
+Z133 8../../E-LogicaSequencial/src/rtl/Register16.vhd
+Z134 F../../E-LogicaSequencial/src/rtl/Register16.vhd
 l0
 L8
 VdPHb?7e0DI[EP9TiUYga@0
@@ -1626,8 +1626,8 @@ R28
 R2
 R3
 R0
-Z136 8../../E-LogicaSequencial/src/rtl/Register32.vhd
-Z137 F../../E-LogicaSequencial/src/rtl/Register32.vhd
+Z135 8../../E-LogicaSequencial/src/rtl/Register32.vhd
+Z136 F../../E-LogicaSequencial/src/rtl/Register32.vhd
 l0
 L8
 VDcNSWzoRLc5DJn@UbWZR]1
@@ -1665,8 +1665,8 @@ R28
 R2
 R3
 R0
-Z138 8../../E-LogicaSequencial/src/rtl/Register64.vhd
-Z139 F../../E-LogicaSequencial/src/rtl/Register64.vhd
+Z137 8../../E-LogicaSequencial/src/rtl/Register64.vhd
+Z138 F../../E-LogicaSequencial/src/rtl/Register64.vhd
 l0
 L8
 V_31lC;H>Rg3UQ9VWdSY_A3
@@ -1704,8 +1704,8 @@ R28
 R2
 R3
 R0
-Z140 8../../E-LogicaSequencial/src/rtl/Register8.vhd
-Z141 F../../E-LogicaSequencial/src/rtl/Register8.vhd
+Z139 8../../E-LogicaSequencial/src/rtl/Register8.vhd
+Z140 F../../E-LogicaSequencial/src/rtl/Register8.vhd
 l0
 L8
 VI9bFH32^`LLZl1[jmYL2B1
@@ -1739,13 +1739,13 @@ R32
 R11
 R12
 Erom32k
-Z142 w1537367958
-R121
+R109
+R120
 R2
 R3
 R110
-Z143 8Modulos/Dispositivos/ROM/ROM32K.vhd
-Z144 FModulos/Dispositivos/ROM/ROM32K.vhd
+Z141 8Modulos/Dispositivos/ROM/ROM32K.vhd
+Z142 FModulos/Dispositivos/ROM/ROM32K.vhd
 l0
 L42
 V<fW;YLE1`;5Xoa:JJ<BVl2
@@ -1755,13 +1755,13 @@ R6
 R113
 !i10b 1
 R114
-Z145 !s90 -work|work|Modulos/Dispositivos/ROM/ROM32K.vhd|
-Z146 !s107 Modulos/Dispositivos/ROM/ROM32K.vhd|
+Z143 !s90 -work|work|Modulos/Dispositivos/ROM/ROM32K.vhd|
+Z144 !s107 Modulos/Dispositivos/ROM/ROM32K.vhd|
 !i113 1
 R11
 R12
 Asyn
-R121
+R120
 R2
 R3
 DEx4 work 6 rom32k 0 22 <fW;YLE1`;5Xoa:JJ<BVl2
@@ -1774,21 +1774,21 @@ R6
 R113
 !i10b 1
 R114
-R145
-R146
+R143
+R144
 !i113 1
 R11
 R12
 Escreen
 R53
-Z147 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
-Z148 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z145 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z146 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
 R23
 R2
 R3
 R0
-Z149 8../src/rtl/Dispositivos/Screen/Screen.vho
-Z150 F../src/rtl/Dispositivos/Screen/Screen.vho
+Z147 8../src/rtl/Dispositivos/Screen/Screen.vho
+Z148 F../src/rtl/Dispositivos/Screen/Screen.vho
 l0
 L7
 V@1Tn8IRUf@Z4_6OYbD><G1
@@ -1798,14 +1798,14 @@ R6
 R43
 !i10b 1
 R44
-Z151 !s90 -reportprogress|300|-work|work|../src/rtl/Dispositivos/Screen/Screen.vho|
-Z152 !s107 ../src/rtl/Dispositivos/Screen/Screen.vho|
+Z149 !s90 -reportprogress|300|-work|work|../src/rtl/Dispositivos/Screen/Screen.vho|
+Z150 !s107 ../src/rtl/Dispositivos/Screen/Screen.vho|
 !i113 1
 R11
 R12
 Alogic
-R147
-R148
+R145
+R146
 R23
 R2
 R3
@@ -1819,18 +1819,18 @@ R6
 R43
 !i10b 1
 R44
-R151
-R152
+R149
+R150
 !i113 1
 R11
 R12
 Ezerador16
-Z153 w1521146848
+Z151 w1521146848
 R2
 R3
 R0
-Z154 8../../D-UnidadeLogicaAritmetica/src/rtl/zerador16.vhd
-Z155 F../../D-UnidadeLogicaAritmetica/src/rtl/zerador16.vhd
+Z152 8../../D-UnidadeLogicaAritmetica/src/rtl/zerador16.vhd
+Z153 F../../D-UnidadeLogicaAritmetica/src/rtl/zerador16.vhd
 l0
 L8
 V8d0KAF=B7=Z1QeP[[SleE2
