@@ -17,7 +17,7 @@ TOOLSPATH = os.path.dirname(os.path.abspath(__file__))+"/../"
 
 jarD = TOOLSPATH+"jar/Z01-VMTranslator.jar"
 
-def callJava(jar, vm, nasm, bootstrap):
+def callJava(jar, vm, nasm, bootstrap=False):
     command = "java -jar " + jar + " " + vm + " -o " + nasm
     if not bootstrap:
         command += " -n"

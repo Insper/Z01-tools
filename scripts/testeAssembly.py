@@ -122,10 +122,11 @@ def compareRam(name, ramEnd, ramEndSimulation):
     # compara as memórias criadas buscando por diferencas
     for e, v in ram.items():
             if(ram[e] != validacao[e]):
-                    print(colored("faill", 'red') + "    {}".format(name))
-                    print("    endereco RAM : {}".format(e))
-                    print("        esperado : " + ram[e])
-                    print("          obtido : " + validacao[e])
+                    print(colored(" ---- FALHOU: {} ----".format(name) , 'red'))
+                    print(" RAM     : {}".format(e))
+                    print(" esperado: " + ram[e])
+                    print(" obtido  : " + validacao[e])
+                    print(colored(" ---------------------".format(name) , 'red'))
                     return(False)
     return(True)
 
@@ -139,32 +140,38 @@ def compareFromTestDir(testDir):
     configFile = testDir+CONFIG_FILE
     pwd = os.path.dirname(configFile)+"/"
     log = []
+    error = 0
 
     f = openConfigFile(testDir)
 
     if f is not False:
         for l in f:
-            if len(l.strip()):
-                if l.strip()[0]!='#':
-                    par   = l.rstrip().split();
-                    name  = par[0]
-                    nTest = int(par[1])
-                    for i in range (0, nTest):
+            if error == 0:
+                if len(l.strip()):
+                    if l.strip()[0]!='#':
+                        par   = l.rstrip().split();
+                        name  = par[0]
+                        nTest = int(par[1])
+                        for i in range (0, nTest):
                             nameTest   = name + str(i)
                             ramEnd     = pwd + "/tst/" + name + "/" + name + "{}".format(i) + RAM_END_FILE
                             ramEndSimu = pwd + "/tst/" + name + "/" + nameTest + RAM_END_SIMU_FILE
                             if(os.path.isfile(ramEnd) and os.path.isfile(ramEndSimu)):
+                                print(' - Testando {}'.format(name))
                                 rtn = compareRam(nameTest, ramEnd, ramEndSimu)
-                                r = "True" if rtn else "False"
-                                result = {'name':name, 'resultado':rtn, 'teste':i}
+                                r = "Teste Ok" if rtn else "Teste Falha"
+                                result = {'name':name, 'status':rtn, 'teste':i}
                                 log.append(result)
+                                if not rtn:
+                                    error = 1
+                                    break
     else:
-        return(-1, result)
+        return -1, result
 
-    print("-=-=- Summary =-=-=")
+    print("\n=-=- Summary =-=-=")
     for result in log:
-        if result['resultado']:
+        if result['status']:
             print(colored("pass",'green') + "    {} teste: {}".format(result['name'], result['teste']))
         else:
             print(colored("fail",'red') + "    {} teste {}".format(result['name'], result['teste']))
-    return(0, log)
+    return error, log

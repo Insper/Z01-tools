@@ -22,7 +22,7 @@ def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 class report(object):
-    def __init__(self, logFile, proj):
+    def __init__(self, logFile, proj, ProjType):
         self.proj = proj
         self.logFile = logFile
         self.idFile = os.path.join(TOOLSPATH,"user.txt")
@@ -32,6 +32,10 @@ class report(object):
         self.Travis = False
         if os.environ.get('Travis') is not None:
             self.Travis = True
+
+        self.error = None
+        if ProjType is 'HW':
+            self.error = self.hw()
 
     def openFirebase(self):
 #        authentication = firebase.FirebaseAuthentication('InsperComp', 'elementosdesistemas@gmail.com', extra={'id': 0})
@@ -48,10 +52,20 @@ class report(object):
         #    f.write(userid)
         #    print("----")
         #f.close()
-        return("GrupoA")
+        return("Professor")
+
+    def hwModuleFail(self):
+        failModules = []
+        for n in self.testData:
+            if n['status'] is 'Failure':
+                failModules.append(n['name'])
+        return(failModules)
 
     def hw(self):
-        tree = ET.parse(self.logFile)
+        try:
+            tree = ET.parse(self.logFile)
+        except IOError:
+            return(-1)
         root = tree.getroot()
         ts = int(time.time())
         error = 0
@@ -75,8 +89,11 @@ class report(object):
 
     def assemblyTeste(self, logFile):
         ts = int(time.time())
-        for log in logFile:
-            self.testData.append({'name': log['name'], 'ts': str(ts), 'status': log['resultado'] })
+        if type(logFile) is dict:
+            self.testData.append({'name': logFile['name'], 'ts': str(ts), 'status': logFile['status'] })
+        else:
+            for log in logFile:
+                self.testData.append({'name': log['name'], 'ts': str(ts), 'status': log['status'] })
 
     def assembler(self, logFile):
         cnt = 0

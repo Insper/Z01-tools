@@ -17,25 +17,7 @@ import platform
 
 from log import logError, logSim
 
-# config file
-CONFIG_FILE = "config.txt"
-
-# TST DIR files
-TST_DIR = "tst/"
-
-# RAM files
-RAM_INIT_FILE     = "_in.mif"
-RAM_END_FILE      = "_tst.mif"
-RAM_END_SIMU_FILE = "_end.mif"
-OUT_SIM_LST = ""
-
-# Path to vsim  #
-PATH_VSIM =  os.path.join(os.environ.get('VUNIT_MODELSIM_PATH'), "vsim")
-
-# Files used on this simulation
-PATH_WORK       = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..", "Z01-Simulator-rtl")
-
-END = "\n"
+from config import *
 
 
 def setRuntimeDo(time, doFile):
@@ -57,9 +39,11 @@ def rmFile(f):
 # e um caminho para o arquivo de programa (.mif)
 # e executa as simulações contidas no arquivo de
 # configuracao.
-def simulateFromTestDir(testDir, hackDir, gui, verbose, rtlDir=PATH_WORK):
+def simulateFromTestDir(testDir, hackDir, gui, verbose, rtlDir=PATH_SIMULATOR):
 
-    #
+    error = 0
+    log = []
+
     configFile = testDir+CONFIG_FILE
 
     # caminho do arquivo de configuracao
@@ -105,6 +89,7 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, rtlDir=PATH_WORK):
                             ramIn = pwd+TST_DIR+name+"/"+name+"{}".format(i) + RAM_INIT_FILE
                             ramOut = pwd+TST_DIR+name+"/"+name+str(i) + RAM_END_SIMU_FILE
                             print("Simulating " + os.path.relpath(mif) + " teste : " + str(i))
+
                             if os.path.isfile(ramIn):
                                     tic = time.time()
                                     if verbose is True :
@@ -117,15 +102,17 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, rtlDir=PATH_WORK):
                             else:
                                     logError("Arquivo de simulacao não encontrado :")
                                     logError("                - {}".format(ramIn))
-                                    return(-1)
+                                    log.append({'name': name, 'status': 'Simulacao Arquivo Fail'})
+                                    return -1, log
                 else:
                     logError("Arquivo hack não encontrado :")
                     logError("                - {}".format(mif))
-                    return(-1)
-    return(0)
+                    log.append({'name': mif, 'status': 'Simulacao Arquivo Fail'})
+                    return -1, log
+    return 0, log
 
 
-def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=PATH_WORK):
+def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=PATH_SIMULATOR):
     global OUT_SIM_LST
     rtlDir = os.path.abspath(rtlDir)
 
