@@ -8,17 +8,10 @@
 #
 # Resumo: executa simulação da CPU via modelsim
 
-import os
-import shutil
-import argparse
-import fileinput
-import time
-import platform
-
+import os, shutil, argparse
+import fileinput, time, platform
 from log import logError, logSim
-
 from config import *
-
 
 def setRuntimeDo(time, doFile):
         for line in fileinput.input(doFile, inplace = 1):

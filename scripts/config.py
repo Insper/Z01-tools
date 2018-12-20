@@ -67,9 +67,9 @@ from testeLogicaCombinacional import tstLogiComb
 from testeULA import tstUla
 from testeLogicaSequencial import tstLogiSeq
 
-from toMIF import toMIF
-from testeAssembly import compareRam, compareFromTestDir
-from simulateCPU import simulateFromTestDir
+#from toMIF import toMIF
+#from testeAssembly import compareRam, compareFromTestDir
+#from simulateCPU import simulateFromTestDir
 
 ERRO_NONE = 0
 ERRO_ASSEMBLER = 1
