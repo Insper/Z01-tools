@@ -29,10 +29,10 @@ class report(object):
         self.userId = self.userID()
         self.connection = self.openFirebase()
         self.testData = []
-        self.Travis = False
-        if os.environ.get('Travis') is not None:
+        if os.environ.get('TRAVIS'):
             self.Travis = True
-
+        else:
+            self.Travis = False      
         self.error = None
         if ProjType is 'HW':
             self.error = self.hw()
