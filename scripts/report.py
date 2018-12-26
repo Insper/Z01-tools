@@ -117,8 +117,8 @@ class report(object):
         else:
             url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
             self.connection
-        result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
-        print('.. .', end='', flush=True)
+            result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
+            print('.. .', end='', flush=True)
 
     def parSend(self):
         Parallel(n_jobs=4)(delayed(self.singleSend)(n) for n in self.testData)
@@ -130,7 +130,7 @@ class report(object):
             else:
                 url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
                 self.connection
-            result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
-            print('.. .', end='', flush=True)
+                result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
+                print('.. .', end='', flush=True)
         print('')
 
