@@ -3,6 +3,8 @@ Projetos/tools/Z01-Simulator-rtl-2/transcript
 *_end.mif
 
 Projetos/I-VM/bin/*
+.DS_Store
+.idea
 
 # VUNIT
 vunit_out/
