@@ -17,6 +17,21 @@ from config import *
 
 imagePath = TOOL_SCRIPT_PATH + '/data/'
 
+def testeAssemblySimulateNotif(error, log):
+    # inicializa notificacao
+    noti = notificacao('Simulacao')
+
+    if not error:
+        noti.ok('\n Bem sucedido')
+        return(0)
+    else:
+        if type(log) == dict:
+            noti.error('\n Falhou: {}'.format(log['name']))
+        else:
+            noti.error('\n Falhou: {}'.format(log[-1]['name']))
+        return(-1)
+
+
 class notificacao(object):
     def __init__(self, msg):
         # Use GdkPixbuf to create the proper image type

@@ -6,7 +6,7 @@ import argparse
 ROOT_PATH = subprocess.Popen(
     ['git', 'rev-parse', '--show-toplevel'],
     stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8')
-PROJ_PATH = os.path.join(ROOT_PATH, 'Projetos', 'src')
+PROJ_PATH = os.path.join(ROOT_PATH, 'Projetos')
 TOOL_PATH = os.path.join(ROOT_PATH, 'Projetos', 'Z01-tools')
 TOOL_SCRIPT_PATH = os.path.join(TOOL_PATH, 'scripts')
 PATH_SIMULATOR = os.path.join(TOOL_PATH, 'Z01-Simulator-rtl')
