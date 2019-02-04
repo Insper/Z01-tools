@@ -11,10 +11,12 @@ import random
 import os.path
 import xml.etree.ElementTree as ET
 import time
-from firebase import firebase
 import json
 import os
 from joblib import Parallel, delayed
+import firebase_admin
+from firebase_admin import credentials, db
+
 
 TOOLSPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 
@@ -27,7 +29,7 @@ class report(object):
         self.logFile = logFile
         self.idFile = os.path.join(TOOLSPATH,"user.txt")
         self.userId = self.userID()
-        self.connection = self.openFirebase()
+        self.openFirebase()
         self.testData = []
         if os.environ.get('TRAVIS'):
             self.Travis = True
@@ -38,9 +40,7 @@ class report(object):
             self.error = self.hw()
 
     def openFirebase(self):
-#        authentication = firebase.FirebaseAuthentication('InsperComp', 'elementosdesistemas@gmail.com', extra={'id': 0})
-        connection = firebase.FirebaseApplication('https://elementos-10281.firebaseio.com/', authentication=None)
-        return(connection)
+        firebase_admin.initialize_app(None, { 'databaseURL': 'https://elementos-10281.firebaseio.com/'})
 
     def userID(self):
         #if os.path.isfile(self.idFile):
@@ -116,8 +116,7 @@ class report(object):
             url = '/'+self.userId+'/'+'Travis/'+self.proj+'/'+n['name']+'/'+n['ts']
         else:
             url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
-            self.connection
-            result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
+            db.reference(url).set({'status': n['status']})
             print('.. .', end='', flush=True)
 
     def parSend(self):
@@ -129,8 +128,7 @@ class report(object):
                 url = '/'+self.userId+'/'+'Travis/'+self.proj+'/'+n['name']+'/'+n['ts']
             else:
                 url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
-                self.connection
-                result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
+                db.reference(url).set({'status': n['status']})
                 print('.. .', end='', flush=True)
         print('')
 

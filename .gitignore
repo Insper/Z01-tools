@@ -4,6 +4,8 @@ Projetos/tools/Z01-Simulator-rtl-2/transcript
 log/
 
 Projetos/I-VM/bin/*
+.DS_Store
+.idea
 
 # VUNIT
 vunit_out/

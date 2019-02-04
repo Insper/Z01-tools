@@ -1,0 +1,128 @@
+<testsuite errors="0" failures="0" hostname="ubuntu" name="testsuite" skipped="0" tests="15"><testcase classname="lib.tb_nand" name="all" time="2.7"><system-out># vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_nand.all_d9f40c4b9b8a853c92c00dd8a102ec369f48636d/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_nand(tb) -L vunit_lib -L lib -g/tb_nand/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_nand.all_d9f40c4b9b8a853c92c00dd8a102ec369f48636d/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:05 on Jan 14,2019
+# ** Warning: Design size of 20828 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_not16" name="all" time="2.8"><system-out># vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_not16.all_b66b8fc9277e1e3933979f97f1cdc6fc5d49fe3e/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_not16(tb) -L vunit_lib -L lib -g/tb_not16/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_not16.all_b66b8fc9277e1e3933979f97f1cdc6fc5d49fe3e/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:05 on Jan 14,2019
+# ** Warning: Design size of 20819 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_and16" name="all" time="2.9"><system-out># vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_and16.all_67f8b0b4b21d5bd0e4aa37b46d244e59c8104249/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_and16(tb) -L vunit_lib -L lib -g/tb_and16/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_and16.all_67f8b0b4b21d5bd0e4aa37b46d244e59c8104249/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:05 on Jan 14,2019
+# ** Warning: Design size of 20870 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_nor8way" name="all" time="3.0"><system-out># vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_nor8way.all_fb0bc40e098775e6627136388335c453a9775362/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_nor8way(tb) -L vunit_lib -L lib -g/tb_nor8way/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_nor8way.all_fb0bc40e098775e6627136388335c453a9775362/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:05 on Jan 14,2019
+# ** Warning: Design size of 21006 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_or8way" name="all" time="1.2"><system-out># End time: 21:24:06 on Jan 14,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_or8way.all_7db2fcc4a54596dd4345e1e4eb3670ecf79e2819/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_or8way(tb) -L vunit_lib -L lib -g/tb_or8way/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_or8way.all_7db2fcc4a54596dd4345e1e4eb3670ecf79e2819/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:06 on Jan 14,2019
+# ** Warning: Design size of 21006 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_or16" name="all" time="1.2"><system-out># End time: 21:24:06 on Jan 14,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_or16.all_cfb9f3841c28e91861188c31754b6dea4385f15a/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_or16(tb) -L vunit_lib -L lib -g/tb_or16/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_or16.all_cfb9f3841c28e91861188c31754b6dea4385f15a/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:06 on Jan 14,2019
+# ** Warning: Design size of 20856 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_dmux2way" name="all" time="1.1"><system-out># End time: 21:24:06 on Jan 14,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_dmux2way.all_a8a6edfaeffa9d5204e37fd61e7c8fe0325f81fa/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_dmux2way(tb) -L vunit_lib -L lib -g/tb_dmux2way/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_dmux2way.all_a8a6edfaeffa9d5204e37fd61e7c8fe0325f81fa/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:07 on Jan 14,2019
+# ** Warning: Design size of 20842 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_dmux4way" name="all" time="1.3"><system-out># End time: 21:24:06 on Jan 14,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_dmux4way.all_8ba639f56fefebe7cb91cce60b081c070576fecc/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_dmux4way(tb) -L vunit_lib -L lib -g/tb_dmux4way/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_dmux4way.all_8ba639f56fefebe7cb91cce60b081c070576fecc/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:07 on Jan 14,2019
+# ** Warning: Design size of 20902 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_dmux8way" name="all" time="1.1"><system-out># End time: 21:24:07 on Jan 14,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_dmux8way.all_cd99140b7e67911c824fd741770dff369a28e4ff/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_dmux8way(tb) -L vunit_lib -L lib -g/tb_dmux8way/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_dmux8way.all_cd99140b7e67911c824fd741770dff369a28e4ff/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:07 on Jan 14,2019
+# ** Warning: Design size of 21010 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_mux4way" name="all" time="1.2"><system-out># End time: 21:24:08 on Jan 14,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux4way.all_eb305fd8bfee2240fe2d11f62749d522292ea5cb/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_mux4way(tb) -L vunit_lib -L lib -g/tb_mux4way/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux4way.all_eb305fd8bfee2240fe2d11f62749d522292ea5cb/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:08 on Jan 14,2019
+# ** Warning: Design size of 20923 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_mux2way" name="all" time="1.3"><system-out># End time: 21:24:07 on Jan 14,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux2way.all_5743cf7c7b26a8c9518b825ed27d1e0019ab4e51/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_mux2way(tb) -L vunit_lib -L lib -g/tb_mux2way/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux2way.all_5743cf7c7b26a8c9518b825ed27d1e0019ab4e51/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:08 on Jan 14,2019
+# ** Warning: Design size of 20832 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_mux16" name="all" time="1.4"><system-out># End time: 21:24:08 on Jan 14,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux16.all_606ba1c5dfe76896aadaa815e44c0f75c086532c/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_mux16(tb) -L vunit_lib -L lib -g/tb_mux16/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux16.all_606ba1c5dfe76896aadaa815e44c0f75c086532c/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:08 on Jan 14,2019
+# ** Warning: Design size of 20851 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_mux4way16" name="all" time="0.9"><system-out># End time: 21:24:08 on Jan 14,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux4way16.all_db1759aed647a09d3ab18e63fb0bb636943a1df6/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_mux4way16(tb) -L vunit_lib -L lib -g/tb_mux4way16/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux4way16.all_db1759aed647a09d3ab18e63fb0bb636943a1df6/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:09 on Jan 14,2019
+# ** Warning: Design size of 20853 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_mux8way16" name="all" time="0.9"><system-out># End time: 21:24:09 on Jan 14,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux8way16.all_bb14d33e746ee3d85cb7ba2b460e0aeab8347928/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_mux8way16(tb) -L vunit_lib -L lib -g/tb_mux8way16/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux8way16.all_bb14d33e746ee3d85cb7ba2b460e0aeab8347928/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:09 on Jan 14,2019
+# ** Warning: Design size of 20905 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase><testcase classname="lib.tb_mux8way" name="all" time="1.0"><system-out># End time: 21:24:09 on Jan 14,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# vsim -modelsimini /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/modelsim/modelsim.ini -wlf /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux8way.all_53d37fb647db4a97e930be8cee067762d0baa1ca/modelsim/vsim.wlf -quiet -t ps -onfinish stop lib.tb_mux8way(tb) -L vunit_lib -L lib -g/tb_mux8way/runner_cfg="active python runner : true,enabled_test_cases : ,output path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/vunit_out/test_output/lib.tb_mux8way.all_53d37fb647db4a97e930be8cee067762d0baa1ca/,tb path : /media/psf/Home/Insper/Z01.1-priv/Projetos/src/C-LogicaCombinacional/tests/tst/,use_color : true" 
+# Start time: 21:24:09 on Jan 14,2019
+# ** Warning: Design size of 21115 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# Break in Subprogram stop at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+# Stopped at /home/eduardo/.local/lib/python3.6/site-packages/vunit/vhdl/core/src/stop_body_2008.vhd line 13
+</system-out></testcase></testsuite>
