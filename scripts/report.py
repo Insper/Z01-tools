@@ -124,13 +124,16 @@ class report(object):
         Parallel(n_jobs=4)(delayed(self.singleSend)(n) for n in self.testData)
 
     def send(self):
-        for n in self.testData:
-            if self.Travis:
-                url = '/'+self.userId+'/'+'Travis/'+self.proj+'/'+n['name']+'/'+n['ts']
-            else:
-                url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
-                self.connection
-                result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
-                print('.. .', end='', flush=True)
-        print('')
+        try:
+            for n in self.testData:
+                if self.Travis:
+                    url = '/'+self.userId+'/'+'Travis/'+self.proj+'/'+n['name']+'/'+n['ts']
+                else:
+                    url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
+                    self.connection
+                    result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
+                    print('.. .', end='', flush=True)
+            print('')
+        except:
+            print('[log] Sem conexão com a internet')
 
