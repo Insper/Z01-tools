@@ -11,53 +11,49 @@ import random
 import os.path
 import xml.etree.ElementTree as ET
 import time
-from firebase import firebase
 import json
 import os
 from joblib import Parallel, delayed
+import firebase_admin
+from firebase_admin import credentials, db
 
 TOOLSPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
+LOG_DB_PASS = 'PASS'
+LOG_DB_FAIL = 'FAIL'
+
 class report(object):
     def __init__(self, logFile, proj, ProjType):
         self.proj = proj
         self.logFile = logFile
-        self.idFile = os.path.join(TOOLSPATH,"user.txt")
+        self.idFile = os.path.abspath(os.path.join("../../GRUPO.json"))
         self.userId = self.userID()
-        self.connection = self.openFirebase()
+        self.openFirebase()
         self.testData = []
         if os.environ.get('TRAVIS'):
             self.Travis = True
         else:
-            self.Travis = False      
+            self.Travis = False
         self.error = None
         if ProjType is 'HW':
             self.error = self.hw()
 
     def openFirebase(self):
-#        authentication = firebase.FirebaseAuthentication('InsperComp', 'elementosdesistemas@gmail.com', extra={'id': 0})
-        connection = firebase.FirebaseApplication('https://elementos-10281.firebaseio.com/', authentication=None)
-        return(connection)
+        firebase_admin.initialize_app(None, { 'databaseURL': 'https://elementos-10281.firebaseio.com/'})
 
     def userID(self):
-        #if os.path.isfile(self.idFile):
-        #    f = open(self.idFile,"r+")
-        #    userid = f.readline()
-        #else:
-        #    f = open(self.idFile,"w+")
-        #    userid = id_generator(size=18)
-        #    f.write(userid)
-        #    print("----")
-        #f.close()
-        return("Professor")
+        if os.path.isfile(self.idFile):
+            with open(self.idFile) as f:
+                data = json.load(f)
+                return(data['Nome-Grupo'].lstrip()[0])
 
     def hwModuleFail(self):
         failModules = []
         for n in self.testData:
-            if n['status'] is 'Failure':
+            if n['status'] is LOG_DB_FAIL:
                 failModules.append(n['name'])
         return(failModules)
 
@@ -76,9 +72,9 @@ class report(object):
 
             p = n.find('failure')
             if p is None:
-                status = 'Ok'
+                status = LOG_DB_PASS
             else:
-                status = 'Failure'
+                status = LOG_DB_FAIL
                 error = error + 1
 
             p = n.find('system-out')
@@ -106,34 +102,17 @@ class report(object):
             s = line.split()
             print(line[:-1])
             self.testData.append({'name': s[2], 'ts': str(ts), 'status': s[0] })
-            if s[0] == 'FAIL':
+            if s[0] == LOG_DB_FAIL:
                 cnt = cnt + 1
         return(cnt)
-
-    def singleSend(self, n):
- #       n = self.testData[i]
-        if self.Travis:
-            url = '/'+self.userId+'/'+'Travis/'+self.proj+'/'+n['name']+'/'+n['ts']
-        else:
-            url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
-            self.connection
-            result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
-            print('.. .', end='', flush=True)
-
-    def parSend(self):
-        Parallel(n_jobs=4)(delayed(self.singleSend)(n) for n in self.testData)
 
     def send(self):
         try:
             for n in self.testData:
-                if self.Travis:
-                    url = '/'+self.userId+'/'+'Travis/'+self.proj+'/'+n['name']+'/'+n['ts']
-                else:
+                if self.Travis == False:
                     url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
-                    self.connection
-                    result = self.connection.put(url, name='status', data=n['status'], params={'print': 'pretty'})
+                    db.reference(url).set({'status': n['status']})
                     print('.. .', end='', flush=True)
             print('')
         except:
             print('[log] Sem conexão com a internet')
-
