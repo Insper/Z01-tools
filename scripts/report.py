@@ -24,7 +24,7 @@ class report(object):
     def __init__(self, logFile, proj, ProjType):
         self.proj = proj
         self.logFile = logFile
-        self.idFile = os.path.abspath(os.path.join("../../GRUPO.json"))
+        self.idFile = os.path.abspath(TOOLSPATH+"/../../GRUPO.json")
         self.userId = self.userID()
         self.openFirebase()
         self.testData = []
@@ -44,7 +44,8 @@ class report(object):
             if os.path.isfile(self.idFile):
                 with open(self.idFile) as f:
                     data = json.load(f)
-                    return(data['Nome-Grupo'].lstrip()[0])
+                    name = data['Nome-Grupo'].lstrip()[0]
+                    return(name)
         except:
             print("  ******************************************")
             print("  * [ERROR] Corrija o arquivo GRUPO.json!  *")
