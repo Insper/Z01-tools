@@ -6,21 +6,16 @@
 #
 # Envia relatório do teste realizado.
 
-import string
-import random
+import sys
 import os.path
 import xml.etree.ElementTree as ET
 import time
 import json
 import os
-from joblib import Parallel, delayed
 import firebase_admin
 from firebase_admin import credentials, db
 
 TOOLSPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-
-def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
 
 LOG_DB_PASS = 'PASS'
 LOG_DB_FAIL = 'FAIL'
@@ -45,10 +40,16 @@ class report(object):
         firebase_admin.initialize_app(None, { 'databaseURL': 'https://elementos-10281.firebaseio.com/'})
 
     def userID(self):
-        if os.path.isfile(self.idFile):
-            with open(self.idFile) as f:
-                data = json.load(f)
-                return(data['Nome-Grupo'].lstrip()[0])
+        try:
+            if os.path.isfile(self.idFile):
+                with open(self.idFile) as f:
+                    data = json.load(f)
+                    return(data['Nome-Grupo'].lstrip()[0])
+        except:
+            print("  ******************************************")
+            print("  * [ERROR] Corrija o arquivo GRUPO.json!  *")
+            print("  ******************************************")
+            sys.exit(-1)
 
     def hwModuleFail(self):
         failModules = []
