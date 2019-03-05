@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Rafael Corsi @ insper.edu.br
 # Agosto @ 2018
@@ -22,16 +22,18 @@ LOG_DB_FAIL = 'FAIL'
 
 class report(object):
     def __init__(self, logFile, proj, ProjType):
+
+        self.Travis = False
+        if os.environ.get('TRAVIS'):
+            self.Travis = True
+        else:
+            self.Travis = False
         self.proj = proj
         self.logFile = logFile
         self.idFile = os.path.abspath(TOOLSPATH+"/../../GRUPO.json")
         self.userId = self.userID()
         self.openFirebase()
         self.testData = []
-        if os.environ.get('TRAVIS'):
-            self.Travis = True
-        else:
-            self.Travis = False
         self.error = None
         if ProjType is 'HW':
             self.error = self.hw()
@@ -40,6 +42,9 @@ class report(object):
         firebase_admin.initialize_app(None, { 'databaseURL': 'https://elementos-10281.firebaseio.com/'})
 
     def userID(self):
+
+        if self.Travis == True:
+            return('Travis')
         try:
             if os.path.isfile(self.idFile):
                 with open(self.idFile) as f:
@@ -50,7 +55,7 @@ class report(object):
             print("  ******************************************")
             print("  * [ERROR] Corrija o arquivo GRUPO.json!  *")
             print("  ******************************************")
-            sys.exit(-1)
+            return('Erro')
 
     def hwModuleFail(self):
         failModules = []
