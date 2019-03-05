@@ -2,7 +2,6 @@ from os.path import join, dirname
 import sys, os, shutil, subprocess
 import argparse
 
-
 ROOT_PATH = subprocess.Popen(
     ['git', 'rev-parse', '--show-toplevel'],
     stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8')
@@ -43,6 +42,9 @@ sys.path.insert(0,PROJ_H_PATH)
 sys.path.insert(0,PROJ_I_PATH)
 sys.path.insert(0,PROJ_J_PATH)
 
+
+CDF_ULA_PATH = TOOL_PATH + '/sof/Z011-ULA.cdf'
+
 # config file
 CONFIG_FILE = "config.txt"
 
@@ -62,12 +64,17 @@ ASSEMBLER_JAR = TOOL_PATH+"/jar/Z01-Assembler.jar"
 from report import report
 from notificacao import notificacao
 from testeVHDL import vhdlScript
-
 from testeLogicaCombinacional import tstLogiComb
+
 #from testeULA import tstUla
 #from testeLogicaSequencial import tstLogiSeq
 
-#from toMIF import toMIF
+from toMIF import toMIF
+from writeSOF import writeSOF
+#from assembler import assembler
+from writeROM import writeROM
+
+
 #from testeAssembly import compareRam, compareFromTestDir
 #from simulateCPU import simulateFromTestDir
 
@@ -78,3 +85,4 @@ ERRO_SIMULATION = 3
 ERRO_SIMULATION_TESTE = 4
 ERRO_VHDL = 5
 ERRO_VHDL_TESTE = 6
+ERRO_PROGRAMING = 7

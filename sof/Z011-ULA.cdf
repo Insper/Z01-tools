@@ -4,9 +4,9 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-/*		Device PartName(5CEBA4F23) Path("") File("DE0_CV_Default.sof") MfrSpec(OpMask(1));*/
+/*		Device PartName(5CEBA4F23) Path("") File("Z011-ULA.sof") MfrSpec(OpMask(1));*/
 
-		Device PartName(5CEBA4F23) File("DE0_CV_Default.sof") MfrSpec(OpMask(1));
+		Device PartName(5CEBA4F23) File("Z011-ULA.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 
