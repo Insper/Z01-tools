@@ -26,10 +26,8 @@ def writeSOF(cdf):
         print("Arquivo {} não encontrado".format(cdf))
         return(1)
 
-    print("Programando FPGA ...")
     pPGM = subprocess.Popen("quartus_pgm -c 1 -m jtag " + cdf, shell=True)
-    exit_code = pPGM.wait()
-    return(exit_code)
+    exit_codes = pPGM.wait()
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
