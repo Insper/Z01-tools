@@ -12,6 +12,7 @@ import xml.etree.ElementTree as ET
 import time
 import json
 import os
+import subprocess
 import firebase_admin
 from firebase_admin import credentials, db
 
@@ -23,15 +24,13 @@ LOG_DB_FAIL = 'FAIL'
 class report(object):
     def __init__(self, logFile, proj, ProjType):
 
-        self.Travis = False
-        if os.environ.get('TRAVIS'):
-            self.Travis = True
-        else:
-            self.Travis = False
         self.proj = proj
         self.logFile = logFile
         self.idFile = os.path.abspath(TOOLSPATH+"/../../GRUPO.json")
-        self.userId = self.userID()
+        self.Travis = self.getTravis()
+        self.groupId = self.getGrupId()
+        self.userName = self.getUserGit()
+        self.branchName = self.getBranchGit()
         self.openFirebase()
         self.testData = []
         self.error = None
@@ -41,10 +40,7 @@ class report(object):
     def openFirebase(self):
         firebase_admin.initialize_app(None, { 'databaseURL': 'https://elementos-10281.firebaseio.com/'})
 
-    def userID(self):
-
-        if self.Travis == True:
-            return('Travis')
+    def getGrupId(self):
         try:
             if os.path.isfile(self.idFile):
                 with open(self.idFile) as f:
@@ -56,6 +52,25 @@ class report(object):
             print("  * [ERROR] Corrija o arquivo GRUPO.json!  *")
             print("  ******************************************")
             return('Erro')
+
+    def getUserGit(self):
+        try:
+            return(subprocess.Popen( ['git', 'config', 'user.name'],   stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8'))
+        except:
+            return('ERRO')
+
+    def getBranchGit(self):
+        try:
+            return(subprocess.Popen( ['git', 'rev-parse', '--abbrev-ref', 'HEAD'],   stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8'))
+        except:
+            return('ERRO')
+
+    def getTravis(self):
+        if os.environ.get('TRAVIS'):
+            travis = True
+        else:
+            travis = False
+        return(travis)
 
     def hwModuleFail(self):
         failModules = []
@@ -116,10 +131,9 @@ class report(object):
     def send(self):
         try:
             for n in self.testData:
-                if self.Travis == False:
-                    url = '/'+self.userId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
-                    db.reference(url).set({'status': n['status']})
-                    print('.. .', end='', flush=True)
+                url = '/'+self.groupId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
+                db.reference(url).set({'status': n['status'], 'name':self.userName, 'branch':self.branchName, 'Travis':str(self.Travis)})
+                print('.. .', end='', flush=True)
             print('')
         except:
             print('[log] Sem conexão com a internet')
