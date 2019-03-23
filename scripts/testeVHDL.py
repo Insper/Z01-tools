@@ -72,9 +72,10 @@ class vhdlScript(object):
         f = openConfigFile(tst)
         if f is not False:
             for l in f:
-                if l.strip():
-                    if '#' not in l:
-                        self.addSrcFile(tst + "tst/tb_" + l[:-1])
+                ls = l.strip()
+                if ls and ('#' not in l):
+                    if ls[-4:] == '.vhd':
+                        self.addSrcFile(tst + "tst/tb_" + ls)
             return(True)
         else:
             return(False)
