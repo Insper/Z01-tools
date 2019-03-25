@@ -29,10 +29,6 @@ def clearbin(hack):
 
 def assemblerFromTestDir(jar, testDir, nasmDir, hackDir):
 
-    print("-------------------------")
-    print("- Montando arquivos      ")
-    print("-------------------------")
-
     error = 0
     log = []
 
@@ -93,10 +89,6 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir):
 
 
 def assemblerAll(jar, nasm, hack, mif):
-
-    print("-------------------------")
-    print("- Montando arquivos      ")
-    print("-------------------------")
 
     error = -1
     log = []
