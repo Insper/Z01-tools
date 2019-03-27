@@ -9,15 +9,7 @@ set NumericStdNoWarnings 1
 ################################
 # Recompila todos os arquivod
 ################################
-# RAM16K
-vcom -work work Modulos/Dispositivos/RAM/RAM16K.vhd
-
-# ROM
-vcom -work work Modulos/Dispositivos/ROM/ROM32K.vhd
-
-#PLL
-#vcom -reportprogress 300 -work work Modulos/Dispositivos/PLL/*.vhd
-vcom -reportprogress 300 -work work Modulos/Dispositivos/PLL/PLL_sim/PLL.vho
+#do load.do
 
 #################################
 # Carrega simulação no computador_tb
@@ -55,6 +47,7 @@ mem save -o ./out/ROM.mem -f mti -data binary -addr decimal -startaddress 0 -end
 
 # RAM
 mem save -o ./out/RAM.mem -f mti -data binary -addr decimal -startaddress 0 -endaddress 16383 -wordsperline 1 /computador_tb/c1/MEMORY_MAPED/RAM/altsyncram_component/MEMORY/m_mem_data_a
+
 ################################
 # Exit
 ################################
