@@ -66,7 +66,7 @@ from notificacao import notificacao
 from testeVHDL import vhdlScript
 from testeLogicaCombinacional import tstLogiComb
 from testeULA import tstUla
-#from testeLogicaSequencial import tstLogiSeq
+from testeLogicaSequencial import tstLogiSeq
 
 from toMIF import toMIF
 from writeSOF import writeSOF
