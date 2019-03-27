@@ -29,10 +29,6 @@ def clearbin(hack):
 
 def assemblerFromTestDir(jar, testDir, nasmDir, hackDir):
 
-    print("-------------------------")
-    print("- Montando arquivos      ")
-    print("-------------------------")
-
     error = 0
     log = []
 
@@ -94,10 +90,6 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir):
 
 def assemblerAll(jar, nasm, hack, mif):
 
-    print("-------------------------")
-    print("- Montando arquivos      ")
-    print("-------------------------")
-
     error = -1
     log = []
 
@@ -130,7 +122,6 @@ def assemblerAll(jar, nasm, hack, mif):
     return ERRO_NONE, log
 
 def assemblerFile(jar, nasm, hack, mif):
-
     error = ERRO_NONE
 
     if not os.path.exists(os.path.dirname(hack)):
