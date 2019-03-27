@@ -5,8 +5,14 @@ import argparse
 ROOT_PATH = subprocess.Popen(
     ['git', 'rev-parse', '--show-toplevel'],
     stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8')
-PROJ_PATH = os.path.join(ROOT_PATH, 'Projetos')
-TOOL_PATH = os.path.join(ROOT_PATH, 'Projetos', 'Z01-tools')
+
+if( ROOT_PATH[-9:] == 'Z01-tools'):
+    PROJ_PATH = os.path.join(ROOT_PATH, '../')
+    TOOL_PATH = os.path.join(ROOT_PATH)
+else:
+    PROJ_PATH = os.path.join(ROOT_PATH, 'Projetos')
+    TOOL_PATH = os.path.join(ROOT_PATH, 'Projetos', 'Z01-tools')
+
 TOOL_SCRIPT_PATH = os.path.join(TOOL_PATH, 'scripts')
 PATH_SIMULATOR = os.path.join(TOOL_PATH, 'Z01-Simulator-rtl')
 
@@ -33,6 +39,7 @@ PROJ_H_NAME = 'Assembler'
 PROJ_I_NAME = 'VM'
 PROJ_J_NAME = 'VMTranslator'
 
+sys.path.insert(0,TOOL_SCRIPT_PATH)
 sys.path.insert(0,PROJ_C_PATH)
 sys.path.insert(0,PROJ_D_PATH)
 sys.path.insert(0,PROJ_E_PATH)
@@ -42,8 +49,8 @@ sys.path.insert(0,PROJ_H_PATH)
 sys.path.insert(0,PROJ_I_PATH)
 sys.path.insert(0,PROJ_J_PATH)
 
-
 CDF_ULA_PATH = TOOL_PATH + '/sof/Z011-ULA.cdf'
+CDF_Z01_PATH = TOOL_PATH + '/sof/Z011.cdf'
 
 # config file
 CONFIG_FILE = "config.txt"
@@ -61,22 +68,6 @@ END = "\n"
 
 ASSEMBLER_JAR = TOOL_PATH+"/jar/Z01-Assembler.jar"
 
-from report import report
-from notificacao import notificacao
-from testeVHDL import vhdlScript
-from testeLogicaCombinacional import tstLogiComb
-from testeULA import tstUla
-#from testeLogicaSequencial import tstLogiSeq
-
-from toMIF import toMIF
-from writeSOF import writeSOF
-#from assembler import assembler
-from writeROM import writeROM
-
-
-#from testeAssembly import compareRam, compareFromTestDir
-#from simulateCPU import simulateFromTestDir
-
 ERRO_NONE = 0
 ERRO_ASSEMBLER = 1
 ERRO_ASSEMBLER_FILE = 2
@@ -85,3 +76,19 @@ ERRO_SIMULATION_TESTE = 4
 ERRO_VHDL = 5
 ERRO_VHDL_TESTE = 6
 ERRO_PROGRAMING = 7
+
+from report import report
+from notificacao import notificacao
+from testeVHDL import vhdlScript
+from testeLogicaCombinacional import tstLogiComb
+from testeULA import tstUla
+from testeLogicaSequencial import tstLogiSeq
+
+from toMIF import toMIF
+from writeSOF import writeSOF
+from assembler import *
+from writeROM import writeROM
+
+#from testeAssembly import compareRam, compareFromTestDir
+#from simulateCPU import simulateFromTestDir
+

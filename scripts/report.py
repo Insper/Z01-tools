@@ -37,6 +37,8 @@ class report(object):
         self.error = None
         if ProjType is 'HW':
             self.error = self.hw()
+        if ProjType is 'NASM':
+            self.error = self.nasm()
 
     def openFirebase(self):
         firebase_admin.initialize_app(None, { 'databaseURL': 'https://elementos-10281.firebaseio.com/'})
@@ -90,12 +92,12 @@ class report(object):
             self.testData.append({'name': testName, 'ts': str(ts), 'status':status})
         return(error)
 
-    def assemblyTeste(self, logFile):
+    def nasm(self):
         ts = int(time.time())
-        if type(logFile) is dict:
-            self.testData.append({'name': logFile['name'], 'ts': str(ts), 'status': logFile['status'] })
+        if type(self.logFile) is dict:
+            self.testData.append({'name': self.logFile['name'], 'ts': str(ts), 'status': self.logFile['status'] })
         else:
-            for log in logFile:
+            for log in self.logFile:
                 self.testData.append({'name': log['name'], 'ts': str(ts), 'status': log['status'] })
 
     def assembler(self, logFile):

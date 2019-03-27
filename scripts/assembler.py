@@ -122,7 +122,6 @@ def assemblerAll(jar, nasm, hack, mif):
     return ERRO_NONE, log
 
 def assemblerFile(jar, nasm, hack, mif):
-
     error = ERRO_NONE
 
     if not os.path.exists(os.path.dirname(hack)):
