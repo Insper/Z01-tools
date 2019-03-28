@@ -9,7 +9,7 @@ set NumericStdNoWarnings 1
 ################################
 # Recompila todos os arquivod
 ################################
-#do load.do
+do load.do
 
 #################################
 # Carrega simulação no computador_tb
