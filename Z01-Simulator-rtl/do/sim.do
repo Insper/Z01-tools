@@ -9,7 +9,7 @@ set NumericStdNoWarnings 1
 ################################
 # Recompila todos os arquivod
 ################################
-#do load.do
+do load.do
 
 #################################
 # Carrega simulação no computador_tb
@@ -31,7 +31,7 @@ add wave -position end sim:/computador_tb/c1/MAIN_CPU/*
 # Executa simulação
 ################################
 
-run 1000 ns
+run 10000 ns
 
 ################################
 # Exporta resultado (list)

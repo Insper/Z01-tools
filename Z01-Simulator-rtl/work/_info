@@ -21,9 +21,9 @@ V756he=zhY6CI=Dn@ki6kU2
 !s100 SiSIIDRe2L<Y`4Mn=<Q<i1
 Z6 OV;C;10.5b;63
 32
-Z7 !s110 1553609448
+Z7 !s110 1553770083
 !i10b 1
-Z8 !s108 1553609448.000000
+Z8 !s108 1553770083.000000
 Z9 !s90 -reportprogress|300|-work|work|../../D-UnidadeLogicaAritmetica/src/rtl/ALU.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/Add16.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/FullAdder.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/HalfAdder.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/Inc16.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/comparador16.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/inversor16.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/zerador16.vhd|
 Z10 !s107 ../../D-UnidadeLogicaAritmetica/src/rtl/zerador16.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/inversor16.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/comparador16.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/Inc16.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/HalfAdder.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/FullAdder.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/Add16.vhd|../../D-UnidadeLogicaAritmetica/src/rtl/ALU.vhd|
 !i113 1
@@ -286,7 +286,7 @@ R10
 R11
 R12
 Ecomputador
-Z34 w1545312035
+Z34 w1553769881
 R22
 R1
 R2
@@ -295,8 +295,8 @@ Z35 8../src/rtl/Computador.vhd
 Z36 F../src/rtl/Computador.vhd
 l0
 L17
-VJ[Xj@BJj@^gP[AdgF_nbl0
-!s100 8V3@XFZg@jU66fkK;bXm=0
+V2NM6IaaamJn30WK;zSf>k3
+!s100 dejHVhAk1=H5<UR2Ja@Af3
 R6
 32
 R7
@@ -311,11 +311,11 @@ Alogic
 R22
 R1
 R2
-DEx4 work 10 computador 0 22 J[Xj@BJj@^gP[AdgF_nbl0
-l121
-L42
-VBc9WA7=8iWadmF_klG6oj2
-!s100 _8A><o9=RWf1@D_<^1=L:0
+DEx4 work 10 computador 0 22 2NM6IaaamJn30WK;zSf>k3
+l119
+L40
+VYLGB2VKI0lP5Wb7>FUo:@3
+!s100 nQ^T^VVC`QdF9>JSVj;cg0
 R6
 32
 R7
@@ -327,7 +327,7 @@ R38
 R11
 R12
 Ecomputador_tb
-Z39 w1553609433
+Z39 w1553769155
 R22
 R1
 R2
@@ -340,11 +340,11 @@ V^<T_kEk4AEg2XQQdZNHhg3
 !s100 TNE09aYh8d4DH0B==1NGH3
 R6
 32
-Z42 !s110 1553609449
+R7
 !i10b 1
-Z43 !s108 1553609449.000000
-Z44 !s90 -reportprogress|300|-work|work|../tests/Computador_tb.vhd|
-Z45 !s107 ../tests/Computador_tb.vhd|
+R8
+Z42 !s90 -reportprogress|300|-work|work|../tests/Computador_tb.vhd|
+Z43 !s107 ../tests/Computador_tb.vhd|
 !i113 1
 R11
 R12
@@ -352,18 +352,18 @@ Artl
 R22
 R1
 R2
-Z46 DEx4 work 13 computador_tb 0 22 ^<T_kEk4AEg2XQQdZNHhg3
+Z44 DEx4 work 13 computador_tb 0 22 ^<T_kEk4AEg2XQQdZNHhg3
 l49
 L20
-V8VIHTjQnGc^Af45]mC>971
-!s100 ]D4HdOZ9D^BMldSK16[<D1
+Z45 V]:mLWPH2fQ4hOh[VdacUQ1
+Z46 !s100 akDBMnU35PMYD9AVz>3mo0
 R6
 32
-R42
+R7
 !i10b 1
+R8
+R42
 R43
-R44
-R45
 !i113 1
 R11
 R12
@@ -614,7 +614,7 @@ VzFV;0jL6N8jRi`hk1413a3
 !s100 iX=YCebcH1iIF4JU;Bemj3
 R6
 32
-R42
+R7
 !i10b 1
 R8
 Z62 !s90 -reportprogress|300|-work|work|../src/rtl/Dispositivos/Screen/FIFO/FIFO16x4096.vhd|
@@ -632,7 +632,7 @@ V2=mCV]]FAVcS:HG]?iR4A0
 !s100 3]aYUBRe>i56LHZhO8Db10
 R6
 32
-R42
+R7
 !i10b 1
 R8
 R62
@@ -771,9 +771,9 @@ VAPRK2AeW1@nf9m`nNLCX:1
 !s100 b_1eMG0HzeD5W9_g=ghdL0
 R6
 32
-R42
+R7
 !i10b 1
-R43
+R8
 Z72 !s90 -reportprogress|300|-work|work|../src/rtl/Dispositivos/Screen/ILI9341.vhd|../src/rtl/Dispositivos/Screen/Screen.vhd|
 Z73 !s107 ../src/rtl/Dispositivos/Screen/Screen.vhd|../src/rtl/Dispositivos/Screen/ILI9341.vhd|
 !i113 1
@@ -790,9 +790,9 @@ V9lDiXNAU?n@h;`0O>?cO[3
 !s100 <2a5_IBgL[oU4m4557XBl3
 R6
 32
-R42
+R7
 !i10b 1
-R43
+R8
 R72
 R73
 !i113 1
@@ -1836,9 +1836,9 @@ V@1Tn8IRUf@Z4_6OYbD><G1
 !s100 QI1MPGVz0LTl7ollmR;iT2
 R6
 32
-R42
+R7
 !i10b 1
-R43
+R8
 R72
 R73
 !i113 1
@@ -1857,9 +1857,9 @@ VZ;C:f8T8KX`<E8=G1eU`41
 !s100 ;?QI?nThGVKXe8;0ER<9I3
 R6
 32
-R42
+R7
 !i10b 1
-R43
+R8
 R72
 R73
 !i113 1
