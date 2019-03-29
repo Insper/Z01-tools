@@ -50,12 +50,12 @@ class Ui_MainWindow(object):
         self.formLayout.setObjectName("formLayout")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setObjectName("label")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label)
+        #self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label)
         self.spinBox = QtWidgets.QSpinBox(self.centralwidget)
         self.spinBox.setMinimum(1)
         self.spinBox.setMaximum(999999999)
         self.spinBox.setObjectName("spinBox")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.spinBox)
+        #self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.spinBox)
         self.label_Reg = QtWidgets.QLabel(self.centralwidget)
         self.label_Reg.setObjectName("label_Reg")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_Reg)
@@ -236,7 +236,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "RESimulatorGUI"))
-        self.label.setText(_translate("MainWindow", "<html><head/><body><p>Instruções</p></body></html>"))
+        self.label.setText(_translate("MainWindow", "<html><head/><body><p>Número de Instruções: </p></body></html>"))
         self.label_Reg.setText(_translate("MainWindow", "Registradores"))
         self.label_A.setText(_translate("MainWindow", "A"))
         self.label_D.setText(_translate("MainWindow", "D"))

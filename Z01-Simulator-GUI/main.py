@@ -12,7 +12,7 @@ if sys.version_info[0] < 3:
 import asm_utils, file_utils
 import config_dialog
 
-from PyQt5.QtCore import QUrl
+from PyQt5.QtCore import QUrl, Qt
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QHeaderView, QFileDialog, QActionGroup, QMessageBox, QProgressDialog, QVBoxLayout
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QDesktopServices
 from PyQt5.QtCore import QThread, QTime, QFileSystemWatcher
@@ -82,7 +82,26 @@ class AppMain(Ui_MainWindow):
         self.rom_watcher.fileChanged.connect(self.reload_rom)
         self.editor_converting = False
         self.spinBox.setValue(100)
+        self.label_A.setStyleSheet('QLabel { font-size: 12pt; }')
+        self.label_D.setStyleSheet('QLabel { font-size: 12pt; }')
+        self.label_S.setStyleSheet('QLabel { font-size: 12pt; }')
+        self.label_inM.setStyleSheet('QLabel { font-size: 12pt; }')
+        self.label_outM.setStyleSheet('QLabel { font-size: 12pt; }')
+        self.toolBar.addSeparator()
+        self.toolBar.addWidget(self.label)
+        self.toolBar.addWidget(self.spinBox)
+        self.lineEdit_A.setStyleSheet(self.style_register())
+        self.lineEdit_D.setStyleSheet(self.style_register())
+        self.lineEdit_S.setStyleSheet(self.style_register())
+        self.lineEdit_inM.setStyleSheet(self.style_register())
+        self.lineEdit_outM.setStyleSheet(self.style_register())
         self.on_new()
+
+    def style_register(self):
+        return 'QLineEdit { border: none; background-color: transparent; font-size:12pt; color:black; }'
+
+    def style_register_active(self):
+        return 'QLineEdit { border: none; background-color: yellow; font-size:12pt; color:black; }'
 
     def setup_threads(self):
         self.asm_thread = QThread()
@@ -309,12 +328,12 @@ class AppMain(Ui_MainWindow):
         if line_edit.text() != new_value:
             line_edit.setText(new_value)
             if not ignore:
-                line_edit.setStyleSheet("QLineEdit {background-color: yellow;}")
+                line_edit.setStyleSheet(self.style_register_active())
             valid = self.valid_binary(line_edit)
             if valid:
                 self.on_ram_tooltip(line_edit)
         else:
-            line_edit.setStyleSheet("")
+            line_edit.setStyleSheet(self.style_register())
 
     def valid_rom(self, item):
         if not item.text():
