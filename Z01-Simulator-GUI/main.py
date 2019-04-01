@@ -5,6 +5,8 @@
 import sys, os, tempfile
 import argparse
 
+from PyQt5 import QtCore, QtGui
+
 if sys.version_info[0] < 3:
     print ("Precisa ser o Python 3")
     exit();
@@ -14,13 +16,35 @@ import config_dialog
 
 from PyQt5.QtCore import QUrl, Qt
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QHeaderView, QFileDialog, QActionGroup, QMessageBox, QProgressDialog, QVBoxLayout
-from PyQt5.QtGui import QStandardItemModel, QStandardItem, QDesktopServices
+from PyQt5.QtGui import QStandardItemModel, QStandardItem, QDesktopServices, QBrush
 from PyQt5.QtCore import QThread, QTime, QFileSystemWatcher
 from main_window import *
 from simulator_task import SimulatorTask
 from assembler_task import AssemblerTask
 from lst_parser import LSTParser
 
+
+class QEditorItemModel(QStandardItemModel):
+    def __init__(self, rows, column, parent):
+        self.breakpoints = []
+        super().__init__(rows, column, parent)
+
+    def data(self, index, role=Qt.DisplayRole):
+        res = super().data(index, role)
+        if role == Qt.BackgroundRole and index.row() in self.breakpoints:
+            return QtGui.QColor(QtCore.Qt.red)
+        return res
+
+    def toggle_breakpoint(self, row):
+        if row in self.breakpoints:
+            self.breakpoints.remove(row)
+        else:
+            self.breakpoints.append(row)
+        index = self.index(row, 1)
+        self.data(index, Qt.BackgroundRole)
+
+    def check_breakpoint_exists(self, row):
+        return row in self.breakpoints
 
 class AppMainWindow(QMainWindow):
     resized = QtCore.pyqtSignal()
@@ -35,6 +59,7 @@ class AppMainWindow(QMainWindow):
 
 class AppMain(Ui_MainWindow):
     RAM_VIEW_INITIAL_SIZE = 10000
+    R0M_VIEW_INITIAL_SIZE = 1000
     TEMP_MAX_RAM_USE = 1024*1000
     STEP_TIMER_IN_MS = 1000
 
@@ -73,6 +98,15 @@ class AppMain(Ui_MainWindow):
     def show_alu(self):
         QDesktopServices.openUrl(QUrl.fromLocalFile("theme/alu.png"))
 
+    def load_icon(self):
+        app_icon = QtGui.QIcon()
+        app_icon.addFile('theme/icon/16x16.png', QtCore.QSize(16, 16))
+        app_icon.addFile('theme/icon/24x24.png', QtCore.QSize(24, 24))
+        app_icon.addFile('theme/icon/32x32.png', QtCore.QSize(32, 32))
+        app_icon.addFile('theme/icon/48x48.png', QtCore.QSize(48, 48))
+        app_icon.addFile('theme/icon/256x256.png', QtCore.QSize(256, 256))
+        return app_icon
+
     def setup_editor(self):
         self.rom_stream = tempfile.SpooledTemporaryFile(max_size=self.TEMP_MAX_RAM_USE, mode="w+")
         self.rom_path = None
@@ -96,6 +130,7 @@ class AppMain(Ui_MainWindow):
         self.lineEdit_inM.setStyleSheet(self.style_register())
         self.lineEdit_outM.setStyleSheet(self.style_register())
         self.on_new()
+        self.window.setWindowIcon(self.load_icon())
 
     def style_register(self):
         return 'QLineEdit { border: none; background-color: transparent; font-size:12pt; color:black; }'
@@ -115,7 +150,7 @@ class AppMain(Ui_MainWindow):
         self.config_dialog_ui.rtlLineEdit.setText("../Z01-Simulator-rtl/")
 
     def setup_clean_views(self, table, rows=100, caption="Dados", line_header=None):
-        model = QStandardItemModel(rows, 1, self.window)
+        model = QEditorItemModel(rows, 1, self.window)
         model.setHorizontalHeaderItem(0, QStandardItem(caption))
         table.setModel(model)
         for k in range(0, table.horizontalHeader().count()):
@@ -126,6 +161,7 @@ class AppMain(Ui_MainWindow):
                 model.setHeaderData(l, QtCore.Qt.Vertical, l)
             else:
                 model.setHeaderData(l, QtCore.Qt.Vertical, line_header(l))
+
         return model
 
     def setup_actions(self):
@@ -157,6 +193,7 @@ class AppMain(Ui_MainWindow):
 
     def on_rom_assembly(self):
         self.editor_converting = True
+        self.on_clear_rom()
         file_utils.copy_file_to_model(self.rom_stream, self.rom_model)
         self.rom_type_sel = self.actionROMAssembly
         self.editor_converting = False
@@ -179,6 +216,15 @@ class AppMain(Ui_MainWindow):
 
         item.setToolTip("{0:d} dec - {1:x} hex".format(val, val))
 
+    def on_clear_rom(self):
+        if self.rom_model is not None:
+            rowCount = self.rom_model.rowCount()
+        else:
+            rowCount = self.R0M_VIEW_INITIAL_SIZE
+
+        self.rom_model = self.setup_clean_views(self.romView, rows=rowCount, caption="ROM")
+        self.romView.verticalHeader().sectionClicked.connect(self.rom_model.toggle_breakpoint)
+
     def on_clear_ram(self):
         self.ram_model = self.setup_clean_views(self.ramView, rows=self.RAM_VIEW_INITIAL_SIZE, caption="RAM", line_header=asm_utils.z01_ram_name)
         for i in range(0, self.RAM_VIEW_INITIAL_SIZE):
@@ -190,7 +236,7 @@ class AppMain(Ui_MainWindow):
     def on_new(self):
         self.rom_path = None
         self.on_clear_ram()
-        self.rom_model = self.setup_clean_views(self.romView, caption="ROM")
+        self.on_clear_rom()
         self.rom_model.itemChanged.connect(self.valid_rom)
         self.ram_model.itemChanged.connect(self.valid_ram)
         self.actionROMAssembly.setEnabled(True)
@@ -275,7 +321,6 @@ class AppMain(Ui_MainWindow):
                 tmp_ram = self.get_updated_ram()
                 self.simulate(tmp_rom, tmp_ram)
             return False
-
         step = self.lst_parser.advance()
 
         if "s_regAout" not in step:
@@ -292,7 +337,7 @@ class AppMain(Ui_MainWindow):
         if self.last_step is not None:
             addr = int(step["s_regAout"], 2)
             index = self.ram_model.index(addr, 0)
-            last_pc_counter = int(self.last_step["pcout"], 2) - 1
+            last_pc_counter = int(self.last_step["pcout"], 2)
 
             if int(step["writeM"]) == 0 and int(step["c_muxALUI_A"]) == 1 and int(self.last_step["c_muxALUI_A"]) == 0:
                self.ramView.setCurrentIndex(index)
@@ -301,22 +346,21 @@ class AppMain(Ui_MainWindow):
                self.ramView.setCurrentIndex(index)
                self.ram_model.itemFromIndex(index).setText(step["outM"])
         else:
-            last_pc_counter = -1
+            last_pc_counter = 0
 
         ## update ROM line
-        pc_counter = int(step["pcout"], 2) - 1
+        pc_counter = int(step["pcout"], 2)
 
         if pc_counter < 0:
             pc_counter = 0
-
-        if pc_counter != last_pc_counter + 1:
-            print("JUMP - Executando NOP")
-            pc_counter = last_pc_counter # Mantem
 
         if self.actionROMAssembly.isChecked():
             rom_line = asm_utils.z01_real_line(self.assembler_task.labels_pos, pc_counter)
         else:
             rom_line = pc_counter
+
+        if self.rom_model.check_breakpoint_exists(rom_line):
+            self.step_timer.stop()
 
         index = self.rom_model.index(rom_line, 0)
         self.romView.setCurrentIndex(index)
@@ -457,11 +501,19 @@ class AppMain(Ui_MainWindow):
         self.data_changed = False
         self.lst_parser = LSTParser(self.simulator_task.lst_stream)
 
+        if self.actionROMAssembly.isChecked():
+            rom_line = asm_utils.z01_real_line(self.assembler_task.labels_pos, 0)
+        else:
+            rom_line = 0
+        index = self.rom_model.index(rom_line, 0)
+        self.romView.setCurrentIndex(index)
+
     def load_converted_asm_bin(self):
         self.asm_thread.quit()
         self.asm_thread.wait()
         if not self.check_assembler_sucess():
             return
+        self.on_clear_rom()
         file_utils.copy_file_to_model(self.assembler_task.stream_out, self.rom_model)
         self.editor_converting = False
 
@@ -470,6 +522,7 @@ class AppMain(Ui_MainWindow):
         self.asm_thread.wait()
         if not self.check_assembler_sucess():
             return
+        self.on_clear_rom()
         file_utils.copy_file_to_model(self.assembler_task.stream_out, self.rom_model, asm_utils.bin_str_to_hex)
         self.editor_converting = False
 
@@ -505,6 +558,8 @@ class AppMain(Ui_MainWindow):
         counter = 0
         lines = file_utils.file_len(filename)
         self.rom_model = self.setup_clean_views(self.romView, rows=lines + 200, caption="ROM")
+        self.on_clear_rom()
+
         for i, l in enumerate(fp):
             if asm_utils.z01_valid_assembly(l.strip()):
                 index = self.rom_model.index(counter, 0)
@@ -520,6 +575,7 @@ class AppMain(Ui_MainWindow):
         self.actionROMBinario.setChecked(True)
         self.actionROMAssembly.setEnabled(False)
         self.load_file(filename, model)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Z01 Simulator command line options")

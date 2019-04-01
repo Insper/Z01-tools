@@ -28,11 +28,21 @@ def hex_str_to_bin(data):
     return "0"*(16-len(x)%17) + x
 
 def z01_real_line(ll, pc_counter):
-    return pc_counter + z01_label_count(ll, pc_counter)
+    line = 0
+    pc = 0
 
-def z01_label_count(ll, pc_counter):
-    a = len([i for i in ll if i <= pc_counter])
-    return a
+    while True:
+        if line in ll:
+            line += 1
+            continue
+
+        if pc == pc_counter:
+            break
+
+        pc += 1
+        line += 1
+
+    return line
 
 def z01_ram_name(pos):
     names = {
