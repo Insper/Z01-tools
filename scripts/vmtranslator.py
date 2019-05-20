@@ -12,6 +12,7 @@ import os,sys
 import argparse
 import subprocess
 from log import logError
+from config import *
 
 TOOLSPATH = os.path.dirname(os.path.abspath(__file__))+"/../"
 
@@ -55,6 +56,62 @@ def vmtranslator(bootstrap, vm, nasm, jar=jarD):
         nNasm = nasm+".nasm"
         rtn = callJava(vm, nNasm, jar)
         return(rtn)
+
+def vmtranslatorFromTestDir(jar, testDir, vmDir, nasmDir, bootstrap=False):
+
+    error = 0
+    log = []
+
+    configFile = testDir+CONFIG_FILE
+
+    # caminho do arquivo de configuracao
+    pwd = os.path.dirname(configFile) + "/"
+
+    # file
+    f = ""
+
+    # Verificando se é diretorio
+    if not os.path.exists(configFile):
+        logError("Favor passar como parametro um diretorio do tipo test")
+        return(1)
+
+    # verifica se exist arquivo de config
+    try:
+        f = open(configFile, 'r')
+    except:
+        logError("Arquivo {} não encontrado".format(CONFIG_FILE))
+        return(1)
+
+    print(" 1/2 Removendo arquivos .nasm" )
+    print("  - {}".format(nasmDir))
+    for item in nasmDir:
+        if item.endswith(".nasm"):
+            os.remove(os.path.join(dir_name, item))
+
+    print(" 2/2 Gerando arquivos   .nasm")
+    print("  - {}".format(vmDir))
+
+    for l in f:
+        if len(l.strip()):
+            if (l.strip()[0] != '#'):
+
+                # pega parametros e atribui caminhos globais
+                # par[0] : Nome do teste (subpasta)
+                # par[1] : quantidade de testes a serem executados
+                # par[2] : tempo de simulação em ns
+                par = l.rstrip().split();
+                name = par[0]
+                vm = vmDir+name
+                nasm = nasmDir+name+'.nasm'
+                nasm = nasm.replace('vm/', '')
+                nasm = nasm.replace('vmExamples/', '')
+                print("  - " +  vm)
+                print("  ->" +nasm)
+                e = callJava(jar, vm, nasm, bootstrap)
+                if e > 0:
+                    return ERRO_ASSEMBLER, log
+    return ERRO_NONE, log
+
 
 
 if __name__ == "__main__":

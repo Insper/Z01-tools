@@ -67,6 +67,7 @@ OUT_SIM_LST = ""
 END = "\n"
 
 ASSEMBLER_JAR = TOOL_PATH+"/jar/Z01-Assembler.jar"
+VMTRANSLATOR_JAR = TOOL_PATH+"/jar/Z01-VMTranslator.jar"
 
 ERRO_NONE = 0
 ERRO_ASSEMBLER = 1

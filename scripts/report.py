@@ -32,11 +32,13 @@ class report(object):
         self.branchName = self.getBranchGit()
         self.openFirebase()
         self.testData = []
-        self.error = None
+        self.error = 0
         if ProjType is 'HW':
             self.error = self.hw()
-        if ProjType is 'NASM':
+        elif ProjType is 'NASM':
             self.error = self.nasm()
+        elif ProjType is 'JAVA':
+            self.error = self.error
 
     def openFirebase(self):
         firebase_admin.initialize_app(None, { 'databaseURL': 'https://elementos-10281.firebaseio.com/'})
@@ -103,7 +105,9 @@ class report(object):
             self.testData.append({'name': testName, 'ts': str(self.ts), 'status':status})
         return(error)
 
-    def nasm(self):
+    def nasm(self, nasm=None):
+        if nasm != None:
+            self.logFile = nasm
         ts = int(time.time())
         if type(self.logFile) is dict:
             self.testData.append({'name': self.logFile['name'], 'ts': str(ts), 'status': self.logFile['status'] })
@@ -111,7 +115,8 @@ class report(object):
             for log in self.logFile:
                 self.testData.append({'name': log['name'], 'ts': str(ts), 'status': log['status'] })
 
-    def assembler(self, logFile):
+    def java(self, logFile):
+
         cnt = 0
         ts = int(time.time())
         try:
@@ -123,8 +128,7 @@ class report(object):
             print(line[:-1])
             self.testData.append({'name': s[2], 'ts': str(self.ts), 'status': s[0] })
             if s[0] == LOG_DB_FAIL:
-                cnt = cnt + 1
-        return(cnt)
+                self.error = self.error + 1
 
     def send(self):
         try:
