@@ -19,7 +19,9 @@ TOOLSPATH = os.path.dirname(os.path.abspath(__file__))+"/../"
 jarD = TOOLSPATH+"jar/Z01-VMTranslator.jar"
 
 def callJava(jar, vm, nasm, bootstrap=False):
+
     command = "java -jar " + jar + " " + vm + " -o " + nasm
+
     if not bootstrap:
         command += " -n"
     proc = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
@@ -46,6 +48,7 @@ def vmtranslator(bootstrap, vm, nasm, jar=jarD):
                 nVM = vm+filename
                 if not os.path.basename(nVM).startswith('.'):
                     print("Compiling {} to {}".format(os.path.basename(nVM), os.path.basename(nNasm)))
+
                     rtn = callJava(jar, nVM, nNasm, bootstrap)
                     if(rtn > 0):
                         return(rtn)
@@ -54,7 +57,7 @@ def vmtranslator(bootstrap, vm, nasm, jar=jarD):
     # é arquivo
     else:
         nNasm = nasm+".nasm"
-        rtn = callJava(vm, nNasm, jar)
+        rtn = callJava(jar, vm, nNasm)
         return(rtn)
 
 def vmtranslatorFromTestDir(jar, testDir, vmDir, nasmDir, bootstrap=False):
