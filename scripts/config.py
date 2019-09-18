@@ -1,17 +1,18 @@
 from os.path import join, dirname
 import sys, os, shutil, subprocess
 import argparse
+from pathlib import Path
 
 ROOT_PATH = subprocess.Popen(
     ['git', 'rev-parse', '--show-toplevel'],
     stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8')
 
+TOOL_PATH = str(Path.home()) + '/Z01-Tools/'
+
 if( ROOT_PATH[-9:] == 'Z01-tools'):
     PROJ_PATH = os.path.join(ROOT_PATH, '../')
-    TOOL_PATH = os.path.join(ROOT_PATH)
 else:
     PROJ_PATH = os.path.join(ROOT_PATH, 'Projetos')
-    TOOL_PATH = os.path.join(ROOT_PATH, 'Projetos', 'Z01-tools')
 
 TOOL_SCRIPT_PATH = os.path.join(TOOL_PATH, 'scripts')
 PATH_SIMULATOR = os.path.join(TOOL_PATH, 'Z01-Simulator-rtl')
