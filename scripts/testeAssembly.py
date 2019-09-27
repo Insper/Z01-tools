@@ -67,16 +67,17 @@ def clearTestDir(testDir):
             for l in f:
                 if len(l.strip()):
                     if l.strip()[0]!='#':
-                        par   = l.rstrip().split();
-                        name  = par[0]
-                        nTest = int(par[1])
-                        for i in range (0, nTest):
-                            nameTest   = name + str(i)
-                            ramEndSimu = pwd + "tst/" + name + "/" + nameTest + RAM_END_SIMU_FILE
-                            try:
-                                os.remove(ramEndSimu)
-                            except:
-                                pass
+                        if(l.split(".")[-1] == "nasm"):
+                            par   = l.rstrip().split();
+                            name  = par[0]
+                            nTest = int(par[1])
+                            for i in range (0, nTest):
+                                nameTest   = name + str(i)
+                                ramEndSimu = pwd + "tst/" + name + "/" + nameTest + RAM_END_SIMU_FILE
+                                try:
+                                    os.remove(ramEndSimu)
+                                except:
+                                    pass
     else:
         return(-1)
 
@@ -92,7 +93,6 @@ def compareRam(name, ramEnd, ramEndSimulation):
     # list
     ram = {}
     validacao = {}
-
 
     try:
         fS = open(ramEndSimulation, 'r')
@@ -148,21 +148,22 @@ def compareFromTestDir(testDir):
         for l in f:
             if len(l.strip()):
                 if l.strip()[0]!='#':
-                    par   = l.rstrip().split();
-                    name  = par[0]
-                    nTest = int(par[1])
-                    for i in range (0, nTest):
-                        nameTest   = name + str(i)
-                        ramEnd     = pwd + "/tst/" + name + "/" + name + "{}".format(i) + RAM_END_FILE
-                        ramEndSimu = pwd + "/tst/" + name + "/" + nameTest + RAM_END_SIMU_FILE
-                        if(os.path.isfile(ramEnd) and os.path.isfile(ramEndSimu)):
-                            print(' - Testando {}'.format(name))
-                            rtn = compareRam(nameTest, ramEnd, ramEndSimu)
-                            r = "Teste Ok" if rtn else "Teste Falha"
-                            result = {'name':name, 'status':rtn, 'teste':i}
-                            log.append(result)
-                            if not rtn:
-                                error = error + 1
+                    if(l.split(".")[-1] == "nasm"):
+                        par   = l.rstrip().split();
+                        name  = par[0].split(".")[0]
+                        nTest = int(par[1])
+                        for i in range (0, nTest):
+                            nameTest   = name + str(i)
+                            ramEnd     = pwd + "/tst/" + name + "/" + name + "{}".format(i) + RAM_END_FILE
+                            ramEndSimu = pwd + "/tst/" + name + "/" + nameTest + RAM_END_SIMU_FILE
+                            if(os.path.isfile(ramEnd) and os.path.isfile(ramEndSimu)):
+                                print(' - Testando {}'.format(name))
+                                rtn = compareRam(nameTest, ramEnd, ramEndSimu)
+                                r = "Teste Ok" if rtn else "Teste Falha"
+                                result = {'name':name, 'status':rtn, 'teste':i}
+                                log.append(result)
+                                if not rtn:
+                                    error = error + 1
     else:
         return -1, result
 

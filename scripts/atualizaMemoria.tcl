@@ -7,9 +7,9 @@ puts stdout ""
 
 set DEV_NAME "@1: 5CE(BA4|FA4) (0x02B050DD)"
 
-set MIF "/home/corsi/Dropbox/Insper/3s-ElementoDeSistemas/5-Repositorios/Z01.1-priv/Projetos/src/bin/hack/piscaLED.mif"
+set MIF "/home/corsi/work/Z01.1/Projetos/bin/hack/R-LCD.mif"
 
-set JTAG "USB-Blaster \[1-3\]"
+set JTAG "USB-Blaster \[1-2\]"
 
 begin_memory_edit -hardware_name $JTAG -device_name $DEV_NAME
 

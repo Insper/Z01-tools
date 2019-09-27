@@ -15,6 +15,27 @@ from log import logError, logAssembler
 
 jar = TOOL_PATH+"jar/Z01-Assembler.jar"
 
+
+def compileAllNotify(error, log):
+    noti = notificacao('Compile all')
+
+    if not error:
+        noti.ok('\n Bem sucedido')
+        return(0)
+    else:
+        noti.error('\n Falhou: {}'.format(log[-1]['name']))
+        return(-1)
+
+def compileAll(jar, nasm, hack):
+    print(" 1/2 Removendo arquivos antigos .hack" )
+    print("  - {}".format(hack))
+    clearbin(hack)
+
+    print(" 2/2 Gerando novos arquivos   .hack")
+    print("  - {}".format(nasm))
+    return assemblerAll(jar, nasm, hack, True)
+
+
 def callJava(jar, nasm, hack):
     command = "java -jar " + jar + " -i " + nasm + " -o " + hack
     proc = subprocess.Popen(command, shell=True)
@@ -65,26 +86,28 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir):
     for l in f:
         if len(l.strip()):
             if (l.strip()[0] != '#'):
-                # pega parametros e atribui caminhos globais
-                # par[0] : Nome do teste (subpasta)
-                # par[1] : quantidade de testes a serem executados
-                # par[2] : tempo de simulação em ns
-                par = l.rstrip().split();
-                name = par[0]
-                nasm = nasmDir+name+".nasm"
-                hack = hackDir+name+'.hack'
-                mif  = hackDir+name+".mif"
+                if (l.find('.nasm')):
+                    # pega parametros e atribui caminhos globais
+                    # par[0] : Nome do teste (subpasta)
+                    # par[1] : quantidade de testes a serem executados
+                    # par[2] : tempo de simulação em ns
+                    par = l.rstrip().split();
 
-                if os.path.isfile(nasm):
-                    e, l = assemblerFile(jar, nasm, hack, mif)
-                    log.append(l)
-                    if e > 0:
-                        return ERRO_ASSEMBLER, log
-                else:
-                    logError("Arquivo nasm não encontrado :")
-                    logError("                - {}".format(nasm))
-                    log.append({'name': mif, 'status': 'false'})
-                    return ERRO_ASSEMBLER_FILE, log
+                    name = par[0]
+                    nasm = nasmDir+name+".nasm"
+                    hack = hackDir+name+'.hack'
+                    mif  = hackDir+name+".mif"
+
+                    if os.path.isfile(nasm):
+                        e, l = assemblerFile(jar, nasm, hack, mif)
+                        log.append(l)
+                        if e > 0:
+                            return ERRO_ASSEMBLER, log
+                    else:
+                        logError("Arquivo nasm não encontrado :")
+                        logError("                - {}".format(nasm))
+                        log.append({'name': mif, 'status': 'false'})
+                        return ERRO_ASSEMBLER_FILE, log
     return ERRO_NONE, log
 
 
