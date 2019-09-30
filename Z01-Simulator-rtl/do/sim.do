@@ -31,7 +31,7 @@ add wave -position end sim:/computador_tb/c1/MAIN_CPU/*
 # Executa simulação
 ################################
 
-run 10000 ns
+run 1000 ns
 
 ################################
 # Exporta resultado (list)
@@ -46,7 +46,7 @@ write list ./out/SIM.lst
 mem save -o ./out/ROM.mem -f mti -data binary -addr decimal -startaddress 0 -endaddress 32767 -wordsperline 1 /computador_tb/c1/ROM/altsyncram_component/MEMORY/m_mem_data_a
 
 # RAM
-mem save -o ./out/RAM.mem -f mti -data binary -addr decimal -startaddress 0 -endaddress 16383 -wordsperline 1 /computador_tb/c1/MEMORY_MAPED/RAM/altsyncram_component/MEMORY/m_mem_data_a
+mem save -o ./out/RAM.mem -f mti -data binary -addr decimal -startaddress 0 -endaddress 32767 -wordsperline 1 /computador_tb/c1/MEMORY_MAPED/RAM/altsyncram_component/MEMORY/m_mem_data_a
 
 ################################
 # Exit
