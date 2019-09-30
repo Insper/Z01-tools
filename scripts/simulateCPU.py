@@ -62,14 +62,15 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, rtlDir=PATH_SIMULATOR):
 
     for l in f:
         if len(l.strip()):
-            if ((l.strip()[0] != '#') and (l.split(".")[-1] == "nasm")):
+            if ((l.strip()[0] != '#') and (l.strip().find('.nasm') > 0)):
+                print(l)
                 # pega parametros e atribui caminhos globais
                 # par[0] : Nome do teste (subpasta)
                 # par[1] : quantidade de testes a serem executados
                 # par[2] : tempo de simulação em ns
                 par = l.rstrip().split();
                 # nome do arquivo
-                name = par[0]
+                name = par[0][:-5]
                 # tempo total de simulacao
                 sTime = int(par[2])
                 # paths

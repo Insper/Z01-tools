@@ -86,14 +86,13 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir):
     for l in f:
         if len(l.strip()):
             if (l.strip()[0] != '#'):
-                if (l.find('.nasm')):
+                if (l.strip().find('.nasm') > 0):
                     # pega parametros e atribui caminhos globais
                     # par[0] : Nome do teste (subpasta)
                     # par[1] : quantidade de testes a serem executados
                     # par[2] : tempo de simulação em ns
-                    par = l.rstrip().split();
-
-                    name = par[0]
+                    par = l.rstrip().split()
+                    name = par[0][:-5]
                     nasm = nasmDir+name+".nasm"
                     hack = hackDir+name+'.hack'
                     mif  = hackDir+name+".mif"
@@ -129,8 +128,7 @@ def assemblerAll(jar, nasm, hack, mif):
         if(os.path.isdir(hack)):
             for filename in os.listdir(nasm):
                 status = 'true'
-                if filename.endswith("nasm"):
-                    #logAssembler(" > "+filename)
+                if (l.strip().find('.nasm') > 0):
                     nHack = hack+filename[:-5]+".hack"
                     nMif  = hack+filename[:-5]+".mif"
                     nNasm = nasm+filename

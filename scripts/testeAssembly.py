@@ -67,9 +67,9 @@ def clearTestDir(testDir):
             for l in f:
                 if len(l.strip()):
                     if l.strip()[0]!='#':
-                        if(l.split(".")[-1] == "nasm"):
+                        if (l.strip().find('.nasm') > 0):
                             par   = l.rstrip().split();
-                            name  = par[0]
+                            name  = par[0][:-5]
                             nTest = int(par[1])
                             for i in range (0, nTest):
                                 nameTest   = name + str(i)
@@ -148,9 +148,9 @@ def compareFromTestDir(testDir):
         for l in f:
             if len(l.strip()):
                 if l.strip()[0]!='#':
-                    if(l.split(".")[-1] == "nasm"):
+                    if (l.strip().find('.nasm') > 0):
                         par   = l.rstrip().split();
-                        name  = par[0].split(".")[0]
+                        name = par[0][:-5]
                         nTest = int(par[1])
                         for i in range (0, nTest):
                             nameTest   = name + str(i)
