@@ -4,7 +4,12 @@
 
 import sys, os, shutil, subprocess
 
-if not os.environ.get('TRAVIS'):
+CI_GITHUB = True if os.environ.get('GITHUB_WORKFLOW') else False
+CI_TRAVIS = True if os.environ.get('TRAVIS') else False
+
+ENABLE = not (CI_GITHUB or CI_TRAVIS)
+
+if (ENABLE):
     # import GdkPixbuf module
     import gi
     gi.require_version("Notify", "0.7")
@@ -43,7 +48,7 @@ class notificacao(object):
         self.msg = '<b>'+msg+'</b>'
 
     def do(self, icon, msg):
-        if not os.environ.get('TRAVIS'):
+        if ENABLE:
             Notify.init("Z01.1")
             self.notification = Notify.Notification.new(msg)
 
