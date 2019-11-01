@@ -12,11 +12,9 @@ import os,sys
 import argparse
 import subprocess
 from log import logError
-from config import *
 
-TOOLSPATH = os.path.dirname(os.path.abspath(__file__))+"/../"
-
-jarD = TOOLSPATH+"jar/Z01-VMTranslator.jar"
+import config
+import util
 
 def callJava(jar, vm, nasm, bootstrap=False):
 
@@ -29,15 +27,13 @@ def callJava(jar, vm, nasm, bootstrap=False):
     return(err)
 
 
-def vmtranslator(bootstrap, vm, nasm, jar=jarD):
+def vmtranslator(bootstrap, vm, nasm, jar=config.VMTRANSLATOR_JAR):
 
     pwd = os.path.dirname(os.path.abspath(__file__))
 
-    # verifica se existe destino
     if not os.path.exists(os.path.dirname(nasm)):
         os.makedirs(os.path.dirname(nasm))
 
-    # verifica se é diretorio
     if(os.path.isdir(vm)):
         if(os.path.isdir(nasm)):
             for filename in os.listdir(vm):
@@ -65,25 +61,10 @@ def vmtranslatorFromTestDir(jar, testDir, vmDir, nasmDir, bootstrap=False):
     error = 0
     log = []
 
-    configFile = testDir+CONFIG_FILE
+    configFile = testDir+config.CONFIG_FILE
 
     # caminho do arquivo de configuracao
     pwd = os.path.dirname(configFile) + "/"
-
-    # file
-    f = ""
-
-    # Verificando se é diretorio
-    if not os.path.exists(configFile):
-        logError("Favor passar como parametro um diretorio do tipo test")
-        return(1)
-
-    # verifica se exist arquivo de config
-    try:
-        f = open(configFile, 'r')
-    except:
-        logError("Arquivo {} não encontrado".format(CONFIG_FILE))
-        return(1)
 
     print(" 1/2 Removendo arquivos .nasm" )
     print("  - {}".format(nasmDir))
@@ -94,14 +75,11 @@ def vmtranslatorFromTestDir(jar, testDir, vmDir, nasmDir, bootstrap=False):
     print(" 2/2 Gerando arquivos   .nasm")
     print("  - {}".format(vmDir))
 
+    f = util.openConfigFile(configFile)
+
     for l in f:
         if len(l.strip()):
             if (l.strip()[0] != '#'):
-
-                # pega parametros e atribui caminhos globais
-                # par[0] : Nome do teste (subpasta)
-                # par[1] : quantidade de testes a serem executados
-                # par[2] : tempo de simulação em ns
                 par = l.rstrip().split();
                 name = par[0]
                 vm = vmDir+name
@@ -112,20 +90,5 @@ def vmtranslatorFromTestDir(jar, testDir, vmDir, nasmDir, bootstrap=False):
                 print("  ->" +nasm)
                 e = callJava(jar, vm, nasm, bootstrap)
                 if e > 0:
-                    return ERRO_ASSEMBLER, log
-    return ERRO_NONE, log
-
-
-
-if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--nasm" , required=True, help="arquivo nasm")
-    ap.add_argument("-o", "--hack" , required=True, help="arquivo hack de saída")
-    ap.add_argument("-m", "--mif" , help="gera o arquivo mif")
-    args = vars(ap.parse_args())
-    if(args["mif"]):
-        mif = True
-    else:
-        mif = False
-    root = os.getcwd()
-    vmtranslator(nasm=args["nasm"], hack=args["hack"], mif=mif)
+                    return config.ERRO_ASSEMBLER, log
+    return config.ERRO_NONE, log

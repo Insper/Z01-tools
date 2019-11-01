@@ -28,10 +28,3 @@ def writeSOF(cdf):
 
     pPGM = subprocess.Popen("quartus_pgm -c 1 -m jtag " + cdf, shell=True)
     exit_codes = pPGM.wait()
-
-if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--cdf" , required=True, help="arquivo de configuracao do gravador do quartus - .cdf")
-    args = vars(ap.parse_args())
-    root = os.getcwd()
-    writeSOF(cdf=args["cdf"])

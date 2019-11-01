@@ -11,8 +11,8 @@
 import os, shutil, argparse
 import fileinput, time, platform
 from log import logError, logSim
-from util import *
-from config import *
+import config
+import util
 
 def setRuntimeDo(time, doFile):
         for line in fileinput.input(doFile, inplace = 1):
@@ -22,21 +22,17 @@ def setRuntimeDo(time, doFile):
                 print(line.rstrip())
 
 
-# Recebe como parametro um diretorio do tipo teste
-# e um caminho para o arquivo de programa (.mif)
-# e executa as simulações contidas no arquivo de
-# configuracao.
-def simulateFromTestDir(testDir, hackDir, gui, verbose, nasmFile=None,rtlDir=PATH_SIMULATOR):
+def simulateFromTestDir(testDir, hackDir, gui, verbose, nasmFile=None,rtlDir=config.PATH_SIMULATOR):
 
     error = 0
     log = []
 
-    configFile = testDir+CONFIG_FILE
+    configFile = testDir+config.CONFIG_FILE
 
     # caminho do arquivo de configuracao
     pwd = os.path.dirname(configFile) + "/"
 
-    f = openConfigFile(testDir)
+    f = util.openConfigFile(testDir)
     for l in f:
         if len(l.strip()):
             if ((l.strip()[0] != '#') and ( (l.strip().find('.nasm') > 0 ) or (l.strip().find('.vm') > 0) )):
@@ -63,8 +59,8 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, nasmFile=None,rtlDir=PAT
                     # simulate
                     for i in range(0, int(par[1])):
                             # usar join ?
-                            ramIn = pwd+TST_DIR+name+"/"+name+"{}".format(i) + RAM_INIT_FILE
-                            ramOut = pwd+TST_DIR+name+"/"+name+str(i) + RAM_END_SIMU_FILE
+                            ramIn = pwd+config.TST_DIR+name+"/"+name+"{}".format(i) + config.RAM_INIT_FILE
+                            ramOut = pwd+config.TST_DIR+name+"/"+name+str(i) + config.RAM_END_SIMU_FILE
                             print(os.path.relpath(mif) + " teste : " + str(i))
 
                             if os.path.isfile(ramIn):
@@ -89,7 +85,7 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, nasmFile=None,rtlDir=PAT
     return 0, log
 
 
-def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=PATH_SIMULATOR):
+def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=config.PATH_SIMULATOR):
     global OUT_SIM_LST
     rtlDir = os.path.abspath(rtlDir)
 
@@ -116,7 +112,7 @@ def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=PATH_SIMULATO
         logError("    - {}".format(ramIn))
         return(1)
 
-    if PATH_VSIM is None:
+    if config.PATH_VSIM is None:
             logError("Configurar a variavel de ambiente : 'VUNIT_MODELSIM_PATH' ")
             return(1)
 
@@ -124,12 +120,8 @@ def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=PATH_SIMULATO
 
     v = ""
 
-    if platform.system() == "Windows":
-        if verbose is False:
-            v = " > NUL "
-    else:
-        if verbose is False:
-            v = " > /dev/null "
+    if verbose is False:
+        v = " > /dev/null "
 
     c = ""
     if debug is False:
@@ -139,7 +131,7 @@ def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=PATH_SIMULATO
     owd = os.getcwd()
     os.chdir(rtlDir)
 
-    os.system(PATH_VSIM  + c + " -do " + PATH_DO + v)
+    os.system(config.PATH_VSIM  + c + " -do " + PATH_DO + v)
     os.chdir(owd)
 
     shutil.copyfile(OUT_RAM_MEM, ramOut)

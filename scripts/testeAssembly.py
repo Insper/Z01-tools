@@ -12,16 +12,16 @@ import os,sys
 import argparse
 from termcolor import colored
 import time
+import config
+import util
 
-from config import *
-from util import *
 from simulateCPU import simulateCPU
 from log import logError, logTest, logSim
 
 def clearTestDir(testDir):
-    configFile = testDir+CONFIG_FILE
+    configFile = testDir + config.CONFIG_FILE
     pwd = os.path.dirname(configFile)+"/"
-    f = openConfigFile(testDir)
+    f = util.openConfigFile(testDir)
 
     if f is not False:
             for l in f:
@@ -33,7 +33,7 @@ def clearTestDir(testDir):
                             nTest = int(par[1])
                             for i in range (0, nTest):
                                 nameTest   = name + str(i)
-                                ramEndSimu = pwd + "tst/" + name + "/" + nameTest + RAM_END_SIMU_FILE
+                                ramEndSimu = pwd + "tst/" + name + "/" + nameTest + config.RAM_END_SIMU_FILE
                                 try:
                                     os.remove(ramEndSimu)
                                 except:
@@ -41,9 +41,7 @@ def clearTestDir(testDir):
     else:
         return(-1)
 
-# Compara dois arquivos RAM em busca
-# de diferencas. Só verifica os endereços
-# especificados em ramEnd
+
 def compareRam(name, ramEnd, ramEndSimulation):
     # file
     fS = ""
@@ -90,18 +88,15 @@ def compareRam(name, ramEnd, ramEndSimulation):
     return(True)
 
 
-# Recebe como parametro um diretorio do tipo teste
-# e faz a comparação de todos os testes especificados
-# no arquivo de configuração
 def compareFromTestDir(testDir, nasmFile=None):
 
     # caminho do arquivo de configuracao
-    configFile = testDir+CONFIG_FILE
+    configFile = testDir+config.CONFIG_FILE
     pwd = os.path.dirname(configFile)+"/"
     log = []
     error = 0
 
-    f = openConfigFile(testDir)
+    f = util.openConfigFile(testDir)
 
     if f is not False:
         for l in f:
@@ -123,8 +118,8 @@ def compareFromTestDir(testDir, nasmFile=None):
                            
                         for i in range (0, nTest):
                             nameTest   = name + str(i)
-                            ramEnd     = pwd + "/tst/" + name + "/" + name + "{}".format(i) + RAM_END_FILE
-                            ramEndSimu = pwd + "/tst/" + name + "/" + nameTest + RAM_END_SIMU_FILE
+                            ramEnd     = pwd + "/tst/" + name + "/" + name + "{}".format(i) + config.RAM_END_FILE
+                            ramEndSimu = pwd + "/tst/" + name + "/" + nameTest + config.RAM_END_SIMU_FILE
                             if(os.path.isfile(ramEnd) and os.path.isfile(ramEndSimu)):
                                 print(' - Testando {}'.format(name))
                                 rtn = compareRam(nameTest, ramEnd, ramEndSimu)

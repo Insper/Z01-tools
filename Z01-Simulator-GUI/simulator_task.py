@@ -5,6 +5,7 @@
 import os, sys, file_utils, argparse, shutil
 
 sys.path.insert(0,"../scripts/")
+import config
 import simulateCPU, toMIF
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 
@@ -18,7 +19,7 @@ class SimulatorTask(QObject):
         super().__init__()
         self.verbose = verbose
         self.file_ram_out =  os.path.abspath(temp_path + "ram_out.mif")
-        self.lst_vsim   = simulateCPU.OUT_SIM_LST # tosco, melhorar isso !
+        self.lst_vsim   = config.OUT_SIM_LST # tosco, melhorar isso !
         self.temp_path = temp_path
         self.debug = debug
         self.rtl_dir = rtl_dir

@@ -9,12 +9,10 @@
 # Possibilita também a geração do .mif
 
 import os,sys,argparse, subprocess, re
-from config import *
+import config
 from toMIF import toMIF
 from log import logError, logAssembler
 from os.path import basename
-
-jar = TOOL_PATH+"jar/Z01-Assembler.jar"
 
 
 def compileAllNotify(error, log):
@@ -26,6 +24,7 @@ def compileAllNotify(error, log):
     else:
         noti.error('\n Falhou: {}'.format(log[-1]['name']))
         return(-1)
+
 
 def compileAll(jar, nasm, hack):
     print(" 1/2 Removendo arquivos antigos .hack" )
@@ -43,18 +42,20 @@ def callJava(jar, nasm, hack):
     err = proc.wait()
     return(err)
 
+
 def clearbin(hack):
     try:
         shutil.rmtree(hack)
     except:
         pass
 
+
 def assemblerFromTestDir(jar, testDir, nasmDir, hackDir, nasmFile=None):
 
     error = 0
     log = []
 
-    configFile = testDir+CONFIG_FILE
+    configFile = testDir+config.CONFIG_FILE
 
     # caminho do arquivo de configuracao
     pwd = os.path.dirname(configFile) + "/"
@@ -112,13 +113,13 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir, nasmFile=None):
                         e, l = assemblerFile(jar, nasm, hack, mif)
                         log.append(l)
                         if e > 0:
-                            return ERRO_ASSEMBLER, log
+                            return config.ERRO_ASSEMBLER, log
                     else:
                         logError("Arquivo nasm não encontrado :")
                         logError("                - {}".format(nasm))
                         log.append({'name': mif, 'status': 'false'})
-                        return ERRO_ASSEMBLER_FILE, log
-    return ERRO_NONE, log
+                        return config.ERRO_ASSEMBLER_FILE, log
+    return config.ERRO_NONE, log
 
 
 def assemblerAll(jar, nasm, hack, mif):
@@ -139,7 +140,7 @@ def assemblerAll(jar, nasm, hack, mif):
         if(os.path.isdir(hack)):
             for filename in os.listdir(nasm):
                 status = 'true'
-                if (l.strip().find('.nasm') > 0):
+                if (filename.strip().find('.nasm') > 0):
                     nHack = hack+filename[:-5]+".hack"
                     nMif  = hack+filename[:-5]+".mif"
                     nNasm = nasm+filename
@@ -147,14 +148,15 @@ def assemblerAll(jar, nasm, hack, mif):
                         e, l = assemblerFile(jar, nNasm, nHack, nMif)
                         log.append(l)
                         if e > 0:
-                            return ERRO_ASSEMBLER, log
+                            return config.ERRO_ASSEMBLER, log
         else:
             logError("output must be folder for folder input!")
-            return ERRO_ASSEMBLER_FILE, log
-    return ERRO_NONE, log
+            return config.ERRO_ASSEMBLER_FILE, log
+    return config.ERRO_NONE, log
+
 
 def assemblerFile(jar, nasm, hack, mif):
-    error = ERRO_NONE
+    error = config.ERRO_NONE
 
     if not os.path.exists(os.path.dirname(hack)):
         os.makedirs(os.path.dirname(hack))
@@ -163,26 +165,12 @@ def assemblerFile(jar, nasm, hack, mif):
     print("   - {} to {}".format(os.path.basename(nasm), os.path.basename(hack)))
     if callJava(jar, nasm, hack) is not 0:
         status = 'Assembler Fail'
-        error  = 1
+        error  = config.ERRO_ASSEMBLER
     else:
         status = 'Assembler Ok'
-        error = 0
+        error = config.ERRO_NONE
     if mif:
         toMIF(hack, os.path.splitext(hack)[0]+".mif")
     log = ({'name': os.path.basename(os.path.splitext(hack)[0]), 'status': status})
 
     return error, log
-
-
-if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--nasm" , required=True, help="arquivo nasm")
-    ap.add_argument("-o", "--hack" , required=True, help="arquivo hack de saída")
-    ap.add_argument("-m", "--mif" , help="gera o arquivo mif")
-    args = vars(ap.parse_args())
-    if(args["mif"]):
-        mif = True
-    else:
-        mif = False
-    root = os.getcwd()
-    assembler(nasm=args["nasm"], hack=args["hack"], mif=mif)

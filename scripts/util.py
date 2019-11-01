@@ -18,7 +18,7 @@ def openConfigFile(testDir):
     # Verificando se é diretorio
     if not os.path.exists(configFile):
         logError("Favor passar como parametro um diretorio do tipo test")
-        return()
+        return(None)
 
     # verifica se exist arquivo de config
     try:

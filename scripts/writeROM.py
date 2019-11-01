@@ -9,11 +9,7 @@ import argparse
 import fileinput
 import subprocess
 import string
-
-TAB = "    "
-END = "\n"
-
-TCL_FILE = "atualizaMemoria.tcl"
+import config
 
 def setMifFile(mif, tclFile):
         for line in fileinput.input(tclFile, inplace = 1):
@@ -45,7 +41,7 @@ def getJtagPort():
 
 
 def writeROM(mif):
-    TCL = os.path.join((os.path.dirname(os.path.abspath(__file__))), TCL_FILE)
+    TCL = os.path.join((os.path.dirname(os.path.abspath(__file__))), config.TCL_FILE)
 
     # verifica se o .mif existe
     mif = os.path.abspath(mif)
@@ -65,10 +61,3 @@ def writeROM(mif):
 
     #os.system("quartus_stp -t "+TCL)
     proc = subprocess.Popen("quartus_stp -t "+TCL, stdout=subprocess.PIPE, shell=True)
-
-if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--mif" , required=True, help="arquivo de entrada memoria")
-    args = vars(ap.parse_args())
-    root = os.getcwd()
-    writeROM(mif=args["mif"])

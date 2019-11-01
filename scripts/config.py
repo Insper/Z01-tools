@@ -24,10 +24,32 @@ PATH_VSIM =  os.path.join(os.environ.get('VUNIT_MODELSIM_PATH'), "vsim")
 ASSEMBLER_JAR = TOOL_PATH+"/jar/Z01-Assembler.jar"
 VMTRANSLATOR_JAR = TOOL_PATH+"/jar/Z01-VMTranslator.jar"
 
+TCL_FILE = "atualizaMemoria.tcl"
+TAB = "    "
+END = "\n"
+
+######################################################
+
 CDF_ULA_PATH = TOOL_PATH + '/sof/Z011-ULA.cdf'
 CDF_Z01_PATH = TOOL_PATH + '/sof/Z011.cdf'
 
 ######################################################
+
+CI_GITHUB = True if os.environ.get('GITHUB_WORKFLOW') else False
+CI_TRAVIS = True if os.environ.get('TRAVIS') else False
+NOTIFY_ENABLE = not (CI_GITHUB or CI_TRAVIS)
+NOTIFY_IMAGES  = TOOL_SCRIPT_PATH + '/data/'
+
+######################################################
+
+PROJ_C_NAME = 'Logica Combinacional'
+PROJ_D_NAME = 'Unidade Logica Aritmetica'
+PROJ_E_NAME = 'Logica Sequencial'
+PROJ_F_NAME = 'Assembly'
+PROJ_G_NAME = 'Computador'
+PROJ_H_NAME = 'Assembler'
+PROJ_I_NAME = 'VM'
+PROJ_J_NAME = 'VMTranslator'
 
 PROJ_C_PATH = os.path.join(PROJ_PATH, 'C-LogicaCombinacional')
 PROJ_D_PATH = os.path.join(PROJ_PATH, 'D-UnidadeLogicaAritmetica')
@@ -38,16 +60,16 @@ PROJ_H_PATH = os.path.join(PROJ_PATH, 'H-Assembler')
 PROJ_I_PATH = os.path.join(PROJ_PATH, 'I-VM')
 PROJ_J_PATH = os.path.join(PROJ_PATH, 'J-VMTranslator')
 
-Z01_GUI_PATH = TOOL_PATH+'/Z01-Simulator-GUI/'
+PROJ_C_TEST = 'testeLogicaCombinacional.py'
+PROJ_D_TEST = 'testeULA.py'
+PROJ_E_TEST = 'testeLogicaSequencial.py'
+PROJ_F_TEST = 'testeAssembly.py'
+PROJ_G_TEST = 'testeAssemblyMyCPU.py'
+PROJ_H_TEST = 'testeAssemblerMyCPU.py'
+PROJ_I_TEST = 'testeVm.py'
+PROJ_J_TEST = 'testeVMtranslator.py'
 
-PROJ_C_NAME = 'Logica Combinacional'
-PROJ_D_NAME = 'Unidade Logica Aritmetica'
-PROJ_E_NAME = 'Logica Sequencial'
-PROJ_F_NAME = 'Assembly'
-PROJ_G_NAME = 'Computador'
-PROJ_H_NAME = 'Assembler'
-PROJ_I_NAME = 'VM'
-PROJ_J_NAME = 'VMTranslator'
+Z01_GUI_PATH = TOOL_PATH+'/Z01-Simulator-GUI/'
 
 sys.path.insert(0,TOOL_SCRIPT_PATH)
 sys.path.insert(0,PROJ_C_PATH)
@@ -72,8 +94,6 @@ RAM_INIT_FILE     = "_in.mif"
 RAM_END_FILE      = "_tst.mif"
 RAM_END_SIMU_FILE = "_end.mif"
 OUT_SIM_LST = ""
-
-END = "\n"
 
 ERRO_NONE = 0
 ERRO_ASSEMBLER = 1

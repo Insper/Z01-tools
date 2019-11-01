@@ -14,9 +14,7 @@ import os
 from vunit import VUnitCLI, VUnit
 from log import logError
 
-from util import *
-from config import *
-
+import util
 
 class vhdlScript(object):
 
@@ -45,7 +43,7 @@ class vhdlScript(object):
         self.add_src_lib(pwd)
 
     def addTstConfigFile(self, tst):
-        f = openConfigFile(tst)
+        f = util.openConfigFile(tst)
         if f is not False:
             for l in f:
                 ls = l.strip()
