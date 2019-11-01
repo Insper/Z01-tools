@@ -11,6 +11,7 @@
 import os, shutil, argparse
 import fileinput, time, platform
 from log import logError, logSim
+from util import *
 from config import *
 
 def setRuntimeDo(time, doFile):
@@ -21,18 +22,11 @@ def setRuntimeDo(time, doFile):
                 print(line.rstrip())
 
 
-def rmFile(f):
-    try:
-        os.remove(f)
-    except OSError:
-        pass
-
-
 # Recebe como parametro um diretorio do tipo teste
 # e um caminho para o arquivo de programa (.mif)
 # e executa as simulações contidas no arquivo de
 # configuracao.
-def simulateFromTestDir(testDir, hackDir, gui, verbose, rtlDir=PATH_SIMULATOR):
+def simulateFromTestDir(testDir, hackDir, gui, verbose, nasmFile=None,rtlDir=PATH_SIMULATOR):
 
     error = 0
     log = []
@@ -42,39 +36,28 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, rtlDir=PATH_SIMULATOR):
     # caminho do arquivo de configuracao
     pwd = os.path.dirname(configFile) + "/"
 
-    os.path.abspath(hackDir)
-    os.path.abspath(configFile)
-
-    # file
-    f = ""
-
-    # Verificando se é diretorio
-    if not os.path.exists(configFile):
-        logError("Favor passar como parametro um diretorio do tipo test")
-        return(1)
-
-    # verifica se exist arquivo de config
-    try:
-        f = open(configFile, 'r')
-    except:
-        logError("Arquivo {} não encontrado".format(CONFIG_FILE))
-        return(1)
-
+    f = openConfigFile(testDir)
     for l in f:
         if len(l.strip()):
-            if ((l.strip()[0] != '#') and (l.strip().find('.nasm') > 0)):
-                print(l)
+            if ((l.strip()[0] != '#') and ( (l.strip().find('.nasm') > 0 ) or (l.strip().find('.vm') > 0) )):
                 # pega parametros e atribui caminhos globais
                 # par[0] : Nome do teste (subpasta)
                 # par[1] : quantidade de testes a serem executados
                 # par[2] : tempo de simulação em ns
                 par = l.rstrip().split();
-                # nome do arquivo
-                name = par[0][:-5]
-                # tempo total de simulacao
+                if(l.strip().find('.vm') > 0):
+                    name = par[0][:-3]
+                else:
+                    name = par[0][:-5]
                 sTime = int(par[2])
-                # paths
                 mif = hackDir+name+".mif"
+
+                # verifica se é para executar compilar
+                # apenas um arquivo da lista
+                if nasmFile is not None:
+                        if name != nasmFile:
+                                continue
+
                 # verifica se arquivo existe
                 if os.path.isfile(mif):
                     # simulate
@@ -82,7 +65,7 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, rtlDir=PATH_SIMULATOR):
                             # usar join ?
                             ramIn = pwd+TST_DIR+name+"/"+name+"{}".format(i) + RAM_INIT_FILE
                             ramOut = pwd+TST_DIR+name+"/"+name+str(i) + RAM_END_SIMU_FILE
-                            print("Simulating " + os.path.relpath(mif) + " teste : " + str(i))
+                            print(os.path.relpath(mif) + " teste : " + str(i))
 
                             if os.path.isfile(ramIn):
                                     tic = time.time()
@@ -124,17 +107,6 @@ def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=PATH_SIMULATO
     romIn = os.path.abspath(romIn)
     ramOut = os.path.abspath(ramOut)
 
-   # try:
-   #         os.remove(OUT_RAM_MEM)
-   #         os.remove(OUT_ROM_MEM)
-   #         os.remove(OUT_SIM_LST)
-   #         print("removido")
-   # except:
-   #         print("simulateCPU: Falha em remove arquivos")
-   #         pass
-
-   # return(0)
-
     try:
         shutil.copyfile(ramIn, TEMP_IN_RAM_MIF)
         shutil.copyfile(romIn, TEMP_IN_ROM_MIF)
@@ -171,31 +143,3 @@ def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=PATH_SIMULATO
     os.chdir(owd)
 
     shutil.copyfile(OUT_RAM_MEM, ramOut)
-
-
-if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-R", "--in_ram_mif", required=True, help="estado inicial da RAM no formato .mif ")
-    ap.add_argument("-P", "--in_rom_mif", required=True, help="estado inicial da ROM no formato .mif ")
-    ap.add_argument("-O", "--out_ram", required=True, help="diretorio para saída das simulacoes")
-    ap.add_argument("-T", "--time_ns", required=True, help="Tempo em ns da simulacao")
-    ap.add_argument("-d", "--debug", required=False,  action='store_true', help="open modelsim window")
-    ap.add_argument("-v", "--verbose", required=False,  action='store_true', help="shows modelsim output")
-    args = vars(ap.parse_args())
-
-    if args["debug"]:
-            debug = True
-    else:
-            debug = False
-
-    if args["verbose"]:
-            verbose = True
-    else:
-            verbose = False
-
-    simulateCPU(ramIn=args["in_ram_mif"],
-                romIn=args["in_rom_mif"],
-                ramOut=args["out_ram"],
-                time=args["time_ns"],
-                debug=debug,
-                verbose=verbose)

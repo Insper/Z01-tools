@@ -14,32 +14,8 @@ import os
 from vunit import VUnitCLI, VUnit
 from log import logError
 
-# config file
-CONFIG_FILE = "config.txt"
-
-# Abre arquivo de configuração a partir de
-# um diretorio do tipo teste
-def openConfigFile(testDir):
-
-    configFile = testDir+CONFIG_FILE
-
-    os.path.abspath(configFile)
-
-    # file
-    f = ""
-
-    # Verificando se é diretorio
-    if not os.path.exists(testDir):
-        logError("Favor passar como parametro um diretorio do tipo test")
-        return()
-
-    # verifica se exist arquivo de config
-    try:
-        f = open(configFile, 'r')
-        return(f)
-    except:
-        logError("Arquivo config.txt não encontrado")
-        return(False)
+from util import *
+from config import *
 
 
 class vhdlScript(object):

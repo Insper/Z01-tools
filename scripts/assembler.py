@@ -12,6 +12,7 @@ import os,sys,argparse, subprocess, re
 from config import *
 from toMIF import toMIF
 from log import logError, logAssembler
+from os.path import basename
 
 jar = TOOL_PATH+"jar/Z01-Assembler.jar"
 
@@ -48,7 +49,7 @@ def clearbin(hack):
     except:
         pass
 
-def assemblerFromTestDir(jar, testDir, nasmDir, hackDir):
+def assemblerFromTestDir(jar, testDir, nasmDir, hackDir, nasmFile=None):
 
     error = 0
     log = []
@@ -86,17 +87,27 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir):
     for l in f:
         if len(l.strip()):
             if (l.strip()[0] != '#'):
-                if (l.strip().find('.nasm') > 0):
-                    # pega parametros e atribui caminhos globais
+                if (l.strip().find('.nasm') > 0) or (l.strip().find('.vm') > 0):
+
                     # par[0] : Nome do teste (subpasta)
                     # par[1] : quantidade de testes a serem executados
                     # par[2] : tempo de simulação em ns
                     par = l.rstrip().split()
-                    name = par[0][:-5]
+                    if(l.strip().find('.vm') > 0):
+                        name = par[0][:-3]
+                    else:
+                        name = par[0][:-5]
+
                     nasm = nasmDir+name+".nasm"
                     hack = hackDir+name+'.hack'
                     mif  = hackDir+name+".mif"
 
+                    # verifica se é para executar compilar
+                    # apenas um arquivo da lista
+                    if nasmFile is not None:
+                        if name != nasmFile:
+                            continue
+                       
                     if os.path.isfile(nasm):
                         e, l = assemblerFile(jar, nasm, hack, mif)
                         log.append(l)

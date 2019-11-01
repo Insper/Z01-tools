@@ -20,6 +20,15 @@ PATH_SIMULATOR = os.path.join(TOOL_PATH, 'Z01-Simulator-rtl')
 # Path to vsim  #
 PATH_VSIM =  os.path.join(os.environ.get('VUNIT_MODELSIM_PATH'), "vsim")
 
+
+ASSEMBLER_JAR = TOOL_PATH+"/jar/Z01-Assembler.jar"
+VMTRANSLATOR_JAR = TOOL_PATH+"/jar/Z01-VMTranslator.jar"
+
+CDF_ULA_PATH = TOOL_PATH + '/sof/Z011-ULA.cdf'
+CDF_Z01_PATH = TOOL_PATH + '/sof/Z011.cdf'
+
+######################################################
+
 PROJ_C_PATH = os.path.join(PROJ_PATH, 'C-LogicaCombinacional')
 PROJ_D_PATH = os.path.join(PROJ_PATH, 'D-UnidadeLogicaAritmetica')
 PROJ_E_PATH = os.path.join(PROJ_PATH, 'E-LogicaSequencial')
@@ -50,8 +59,7 @@ sys.path.insert(0,PROJ_H_PATH)
 sys.path.insert(0,PROJ_I_PATH)
 sys.path.insert(0,PROJ_J_PATH)
 
-CDF_ULA_PATH = TOOL_PATH + '/sof/Z011-ULA.cdf'
-CDF_Z01_PATH = TOOL_PATH + '/sof/Z011.cdf'
+######################################################
 
 # config file
 CONFIG_FILE = "config.txt"
@@ -67,9 +75,6 @@ OUT_SIM_LST = ""
 
 END = "\n"
 
-ASSEMBLER_JAR = TOOL_PATH+"/jar/Z01-Assembler.jar"
-VMTRANSLATOR_JAR = TOOL_PATH+"/jar/Z01-VMTranslator.jar"
-
 ERRO_NONE = 0
 ERRO_ASSEMBLER = 1
 ERRO_ASSEMBLER_FILE = 2
@@ -78,6 +83,9 @@ ERRO_SIMULATION_TESTE = 4
 ERRO_VHDL = 5
 ERRO_VHDL_TESTE = 6
 ERRO_PROGRAMING = 7
+
+
+######################################################
 
 from report import report
 from notificacao import notificacao
@@ -94,7 +102,3 @@ from toMIF import toMIF
 from writeSOF import writeSOF
 from assembler import *
 from writeROM import writeROM
-
-#from testeAssembly import compareRam, compareFromTestDir
-#from simulateCPU import simulateFromTestDir
-

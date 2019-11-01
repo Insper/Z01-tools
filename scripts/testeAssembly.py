@@ -13,50 +13,10 @@ import argparse
 from termcolor import colored
 import time
 
-TOOLSPATH = os.path.dirname(os.path.abspath(__file__))+"/../"
-
+from config import *
+from util import *
 from simulateCPU import simulateCPU
 from log import logError, logTest, logSim
-
-# config file
-CONFIG_FILE = "config.txt"
-
-# TST DIR files
-TST_DIR = "tst/"
-
-# RAM files
-RAM_INIT_FILE     = "_in.mif"
-RAM_END_FILE      = "_tst.mif"
-RAM_END_SIMU_FILE = "_end.mif"
-
-
-# Abre arquivo de configuração a partir de
-# um diretorio do tipo teste
-def openConfigFile(testDir):
-
-    configFile = testDir+CONFIG_FILE
-
-    os.path.abspath(configFile)
-
-    # caminho do arquivo de configuracao
-    pwd = os.path.dirname(configFile)+"/"
-
-    # file
-    f = ""
-
-    # Verificando se é diretorio
-    if not os.path.exists(configFile):
-        logError("Favor passar como parametro um diretorio do tipo test")
-        return()
-
-    # verifica se exist arquivo de config
-    try:
-        f = open(configFile, 'r')
-        return(f)
-    except:
-        logError("Arquivo config.txt não encontrado")
-        return(False)
-
 
 def clearTestDir(testDir):
     configFile = testDir+CONFIG_FILE
@@ -80,7 +40,6 @@ def clearTestDir(testDir):
                                     pass
     else:
         return(-1)
-
 
 # Compara dois arquivos RAM em busca
 # de diferencas. Só verifica os endereços
@@ -134,7 +93,7 @@ def compareRam(name, ramEnd, ramEndSimulation):
 # Recebe como parametro um diretorio do tipo teste
 # e faz a comparação de todos os testes especificados
 # no arquivo de configuração
-def compareFromTestDir(testDir):
+def compareFromTestDir(testDir, nasmFile=None):
 
     # caminho do arquivo de configuracao
     configFile = testDir+CONFIG_FILE
@@ -148,10 +107,20 @@ def compareFromTestDir(testDir):
         for l in f:
             if len(l.strip()):
                 if l.strip()[0]!='#':
-                    if (l.strip().find('.nasm') > 0):
-                        par   = l.rstrip().split();
-                        name = par[0][:-5]
+                    if (l.strip().find('.nasm') > 0) or (l.strip().find('.vm') > 0):
+                        par   = l.rstrip().split()
+                        if(l.strip().find('.vm') > 0 ):
+                            name = par[0][:-3]
+                        else:
+                            name = par[0][:-5]
                         nTest = int(par[1])
+
+                        # verifica se é para executar compilar
+                        # apenas um arquivo da lista
+                        if nasmFile is not None:
+                            if name != nasmFile:
+                                continue
+                           
                         for i in range (0, nTest):
                             nameTest   = name + str(i)
                             ramEnd     = pwd + "/tst/" + name + "/" + name + "{}".format(i) + RAM_END_FILE
