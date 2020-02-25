@@ -13,8 +13,8 @@ import time
 import json
 import os
 import subprocess
-import firebase_admin
-from firebase_admin import credentials, db
+from pymongo import MongoClient
+from datetime import datetime
 
 TOOLSPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 
@@ -30,7 +30,8 @@ class report(object):
         self.groupId = self.getGrupId(os.path.abspath(TOOLSPATH+"/../../GRUPO.json"))
         self.userName = self.getUserGit()
         self.branchName = self.getBranchGit()
-        self.openFirebase()
+        self.db = None
+        self.openMongo()
         self.testData = []
         self.error = 0
         if ProjType is 'HW':
@@ -40,8 +41,9 @@ class report(object):
         elif ProjType is 'JAVA':
             self.error = self.error
 
-    def openFirebase(self):
-        firebase_admin.initialize_app(None, { 'databaseURL': 'https://elementos-10281.firebaseio.com/'})
+    def openMongo(self):
+        mongo = MongoClient(host='35.173.122.31', username='myUserAdmin', password='L838gavGe5tuWPH', authSource='admin')
+        self.db = mongo.elementos_test
 
     def getGrupId(self, idFile):
         try:
@@ -134,8 +136,22 @@ class report(object):
         try:
             for n in self.testData:
                 url = '/'+self.groupId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
-                db.reference(url).set({'status': n['status'], 'name':self.userName, 'branch':self.branchName, 'Travis':str(self.Travis)})
+
+                post_id = {'group':self.groupId, 'project': self.proj, 'test': n['name'], 'branch': self.branchName}
+                ref = self.db.tests.find_one(post_id)
+                if ref is None:
+                    post_id['created'] = datetime.now()
+                    post_id['runs'] = []
+                    self.db.tests.insert(post_id)
+                    ref = self.db.tests.find_one(post_id)
+                  
+                ref['updated'] = datetime.now()
+                ref['Travis'] = str(self.Travis)
+                ref['status'] = n['status']
+                ref['runs'].append({'status': n['status'], 'ts': n['ts']})
+                self.db.tests.save(ref)
                 print('.. .', end='', flush=True)
             print('')
-        except:
+        except Exception as e:
+           print(e)
            print('[log] Sem conexão com a internet')
