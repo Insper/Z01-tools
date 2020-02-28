@@ -15,19 +15,15 @@ import os
 import subprocess
 from pymongo import MongoClient
 from datetime import datetime
-
-TOOLSPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-
-LOG_DB_PASS = 'PASS'
-LOG_DB_FAIL = 'FAIL'
+from config import *
 
 class report(object):
     def __init__(self, logFile, proj, ProjType):
         self.proj = proj
         self.logFile = logFile
         self.ts = int(time.time())
-        self.Travis = self.getTravis()
-        self.groupId = self.getGrupId(os.path.abspath(TOOLSPATH+"/../../GRUPO.json"))
+        self.Travis = CI_TRAVIS
+        self.groupId = self.getGrupId(ROOT_PATH + '/GRUPO.json')
         self.userName = self.getUserGit()
         self.branchName = self.getBranchGit()
         self.db = None
@@ -67,13 +63,6 @@ class report(object):
             return(subprocess.Popen( ['git', 'rev-parse', '--abbrev-ref', 'HEAD'],   stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8'))
         except:
             return('ERRO')
-
-    def getTravis(self):
-        if os.environ.get('TRAVIS'):
-            travis = True
-        else:
-            travis = False
-        return(travis)
 
     def hwModuleFail(self):
         failModules = []
@@ -144,7 +133,7 @@ class report(object):
                     post_id['runs'] = []
                     self.db.tests.insert(post_id)
                     ref = self.db.tests.find_one(post_id)
-                  
+
                 ref['updated'] = datetime.now()
                 ref['Travis'] = str(self.Travis)
                 ref['status'] = n['status']
