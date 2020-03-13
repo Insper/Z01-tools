@@ -91,8 +91,9 @@ TST_DIR = "tst/"
 # RAM files
 RAM_INIT_FILE     = "_in.mif"
 RAM_END_FILE      = "_tst.mif"
+LCD_PGM_FILE      = ".pgm"
 RAM_END_SIMU_FILE = "_end.mif"
-OUT_SIM_LST = ""
+OUT_SIM_LST       = ""
 
 ERRO_NONE = 0
 ERRO_ASSEMBLER = 1

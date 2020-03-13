@@ -13,6 +13,7 @@ import fileinput, time, platform
 from log import logError, logSim
 import config
 import util
+from genImg import lcdToimg
 
 def setRuntimeDo(time, doFile):
         for line in fileinput.input(doFile, inplace = 1):
@@ -61,6 +62,7 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, nasmFile=None,rtlDir=con
                             # usar join ?
                             ramIn = pwd+config.TST_DIR+name+"/"+name+"{}".format(i) + config.RAM_INIT_FILE
                             ramOut = pwd+config.TST_DIR+name+"/"+name+str(i) + config.RAM_END_SIMU_FILE
+                            lcdOut = pwd+config.TST_DIR+name+"/"+name+str(i) + config.LCD_PGM_FILE
                             print(os.path.relpath(mif) + " teste : " + str(i))
 
                             if os.path.isfile(ramIn):
@@ -69,7 +71,7 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, nasmFile=None,rtlDir=con
                                         print(ramIn)
                                         print(mif)
                                         print(ramOut)
-                                    simulateCPU(ramIn, mif, ramOut, sTime, gui, verbose, rtlDir=rtlDir)
+                                    simulateCPU(ramIn, mif, ramOut, lcdOut, sTime, gui, verbose, rtlDir=rtlDir)
                                     toc = time.time()
                                     print(" ({0:.2f} seconds)".format(toc-tic))
                             else:
@@ -85,7 +87,7 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, nasmFile=None,rtlDir=con
     return 0, log
 
 
-def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=config.PATH_SIMULATOR):
+def simulateCPU(ramIn, romIn, ramOut, lcdOut, time, debug, verbose, rtlDir=config.PATH_SIMULATOR):
     global OUT_SIM_LST
     rtlDir = os.path.abspath(rtlDir)
 
@@ -94,6 +96,7 @@ def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=config.PATH_S
     TEMP_IN_ROM_MIF = os.path.join(rtlDir, "tmpROM.mif")
     OUT_RAM_MEM     = os.path.join(rtlDir, "out", "RAM.mem")
     OUT_ROM_MEM     = os.path.join(rtlDir, "out", "ROM.mem")
+    OUT_LCD_MEM     = os.path.join(rtlDir, "out", "LCD.mem")
     # tosco, melhorar isso ! não pode ser global !
     # mas o gui simulator usa, colocar como parametro ?
     # ou criar uma classe
@@ -102,6 +105,7 @@ def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=config.PATH_S
     ramIn = os.path.abspath(ramIn)
     romIn = os.path.abspath(romIn)
     ramOut = os.path.abspath(ramOut)
+    lcdOut = os.path.abspath(lcdOut)
 
     try:
         shutil.copyfile(ramIn, TEMP_IN_RAM_MIF)
@@ -134,4 +138,10 @@ def simulateCPU(ramIn, romIn, ramOut, time, debug, verbose, rtlDir=config.PATH_S
     os.system(config.PATH_VSIM  + c + " -do " + PATH_DO + v)
     os.chdir(owd)
 
-    shutil.copyfile(OUT_RAM_MEM, ramOut)
+    try:
+        shutil.copyfile(OUT_RAM_MEM, ramOut)
+    except:
+        logError("Falha na simulação")
+        return(1)
+
+    lcd = lcdToimg(OUT_LCD_MEM, lcdOut)
