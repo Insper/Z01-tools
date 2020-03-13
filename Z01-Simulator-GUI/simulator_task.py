@@ -19,6 +19,7 @@ class SimulatorTask(QObject):
         super().__init__()
         self.verbose = verbose
         self.file_ram_out =  os.path.abspath(temp_path + "ram_out.mif")
+        self.file_lcd_out =  os.path.abspath(temp_path + "lcd.pgm")
         self.lst_vsim   = config.OUT_SIM_LST # tosco, melhorar isso !
         self.temp_path = temp_path
         self.debug = debug
@@ -44,9 +45,9 @@ class SimulatorTask(QObject):
         if self.verbose:
             print("Starting simulator....")
         if self.rtl_dir is None:
-            simulateCPU.simulateCPU(self.file_ram_in, self.file_rom_in, self.file_ram_out, self.simulation_time, self.debug, self.verbose)
+            simulateCPU.simulateCPU(self.file_ram_in, self.file_rom_in, self.file_ram_out, self.file_lcd_out, self.simulation_time, self.debug, self.verbose)
         else:
-            simulateCPU.simulateCPU(self.file_ram_in, self.file_rom_in, self.file_ram_out, self.simulation_time, self.debug, self.verbose, self.rtl_dir)
+            simulateCPU.simulateCPU(self.file_ram_in, self.file_rom_in, self.file_ram_out, self.file_lcd_out, self.simulation_time, self.debug, self.verbose, self.rtl_dir)
         self.lst_vsim   = simulateCPU.OUT_SIM_LST # tosco, melhorar isso
         file_utils.file_to_stream(self.lst_vsim, self.lst_stream)
         if self.verbose:
