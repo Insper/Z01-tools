@@ -48,6 +48,9 @@ mem save -o ./out/ROM.mem -f mti -data binary -addr decimal -startaddress 0 -end
 # RAM
 mem save -o ./out/RAM.mem -f mti -data binary -addr decimal -startaddress 0 -endaddress 32767 -wordsperline 1 /computador_tb/c1/MEMORY_MAPED/RAM/altsyncram_component/MEMORY/m_mem_data_a
 
+mem save -o ./out/LCD.mem -f mti -data binary -addr decimal -startaddress 16384 -endaddress 21183 -wordsperline 20 /computador_tb/c1/MEMORY_MAPED/RAM/altsyncram_component/MEMORY/m_mem_data_a
+
+
 ################################
 # Exit
 ################################
