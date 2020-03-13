@@ -58,7 +58,7 @@ class AppMainWindow(QMainWindow):
 
 
 class AppMain(Ui_MainWindow):
-    RAM_VIEW_INITIAL_SIZE = 10000
+    RAM_VIEW_INITIAL_SIZE = 21186
     R0M_VIEW_INITIAL_SIZE = 1000
     TEMP_MAX_RAM_USE = 1024*1000
     STEP_TIMER_IN_MS = 1000
@@ -95,8 +95,9 @@ class AppMain(Ui_MainWindow):
         self.setup_actions()
         self.setup_threads()
 
-    def show_alu(self):
-        QDesktopServices.openUrl(QUrl.fromLocalFile("theme/alu.png"))
+        self.SW = [self.SW9, self.SW8, self.SW7, self.SW6, self.SW5, self.SW4, self.SW3, self.SW2, self.SW1, self.SW0]
+        self.LEDR = [self.LEDR9, self.LEDR8, self.LEDR7, self.LEDR6, self.LEDR5, self.LEDR4, self.LEDR3, self.LEDR2,
+                     self.LEDR1, self.LEDR0]
 
     def load_icon(self):
         app_icon = QtGui.QIcon()
@@ -115,15 +116,12 @@ class AppMain(Ui_MainWindow):
         self.rom_watcher = QFileSystemWatcher()
         self.rom_watcher.fileChanged.connect(self.reload_rom)
         self.editor_converting = False
-        self.spinBox.setValue(100)
         self.label_A.setStyleSheet('QLabel { font-size: 12pt; }')
         self.label_D.setStyleSheet('QLabel { font-size: 12pt; }')
         self.label_S.setStyleSheet('QLabel { font-size: 12pt; }')
         self.label_inM.setStyleSheet('QLabel { font-size: 12pt; }')
         self.label_outM.setStyleSheet('QLabel { font-size: 12pt; }')
         self.toolBar.addSeparator()
-        self.toolBar.addWidget(self.label)
-        self.toolBar.addWidget(self.spinBox)
         self.lineEdit_A.setStyleSheet(self.style_register())
         self.lineEdit_D.setStyleSheet(self.style_register())
         self.lineEdit_S.setStyleSheet(self.style_register())
@@ -176,14 +174,12 @@ class AppMain(Ui_MainWindow):
         self.actionParar.triggered.connect(self.on_parar)
         self.actionEraseRAM.triggered.connect(self.on_clear_ram)
         self.actionVoltarInicio.triggered.connect(self.on_voltar_inicio)
-        self.spinBox.valueChanged.connect(self.on_voltar_inicio)
         self.actionROMAssembly.triggered.connect(self.on_rom_assembly)
         self.actionROMBinario.triggered.connect(self.on_rom_binary)
         self.actionROMGroup = QActionGroup(self.window)
         self.actionROMGroup.addAction(self.actionROMAssembly)
         self.actionROMGroup.addAction(self.actionROMBinario)
         self.actionROMAssembly.setChecked(True)
-        self.but_ALU.clicked.connect(self.show_alu)
         self.config_dialog_ui.procurarButton.clicked.connect(self.on_search_assembler)
         self.config_dialog_ui.alterarButton.clicked.connect(self.config_dialog.close)
         self.actionConfiguracoes.triggered.connect(self.config_dialog.show)
@@ -248,6 +244,7 @@ class AppMain(Ui_MainWindow):
         self.clear_simulation()
 
     def on_parar(self):
+        self.keys_to_ram()
         self.step_timer.stop()
 
     def on_executar_fim(self):
@@ -312,6 +309,9 @@ class AppMain(Ui_MainWindow):
             if self.lst_parser is not None:
                 self.lst_parser.close()
 
+            self.keys_set_enable(False)
+            self.keys_to_ram()
+
             if self.actionROMAssembly.isChecked():
                 file_utils.copy_model_to_file(self.rom_model, self.rom_stream)
                 self.assemble(self.assemble_end)
@@ -364,6 +364,7 @@ class AppMain(Ui_MainWindow):
 
         index = self.rom_model.index(rom_line, 0)
         self.romView.setCurrentIndex(index)
+        self.ram_to_leds()
 
         print("PROXIMO")
         self.last_step = step
@@ -450,7 +451,7 @@ class AppMain(Ui_MainWindow):
 
         self.simulator_task = SimulatorTask("temp/", False, self.config_dialog_ui.simGUIBox.isChecked(), self.config_dialog_ui.rtlLineEdit.text())
         lst_out = tempfile.SpooledTemporaryFile(max_size=self.TEMP_MAX_RAM_USE, mode="w+")
-        self.simulator_task.setup(rom_file, ram_file, lst_out, self.spinBox.value()*10+10)
+        self.simulator_task.setup(rom_file, ram_file, lst_out, 100*10+10)
         self.simulator_task.finished.connect(self.simulation_end)
         self.simulator_task.moveToThread(self.sim_thread)
         self.sim_thread.started.connect(self.simulator_task.run)
@@ -472,6 +473,31 @@ class AppMain(Ui_MainWindow):
             qapp.processEvents()
 
         self.progress_dialog.reset()
+
+    def read_keys(self):
+        data = 0
+        for k in self.SW:
+            data = data << 1
+            if k.isChecked():
+                data = data | 1
+        return data
+
+    def keys_set_enable(self, enable=True):
+        for k in self.SW:
+            k.setEnabled(enable)
+
+    def keys_to_ram(self):
+        data = '{0:0>16b}'.format(self.read_keys())
+        self.ram_model.setItem(21185, QStandardItem(data))
+
+    def ram_to_leds(self):
+        index = self.ram_model.index(21184, 0)
+        data = self.ram_model.itemFromIndex(index).text().strip()
+        for c in range(0, 10):
+            if data[6+c] == '1':
+                self.LEDR[c].setChecked(True)
+            elif data[6+c] == '0':
+                self.LEDR[c].setChecked(False)
 
     def get_updated_ram(self):
         ram = tempfile.SpooledTemporaryFile(max_size=self.TEMP_MAX_RAM_USE, mode="w+")
