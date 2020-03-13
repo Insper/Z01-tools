@@ -13,6 +13,7 @@ import config
 from toMIF import toMIF
 from log import logError, logAssembler
 from os.path import basename
+from notificacao import notificacao
 
 
 def compileAllNotify(error, log):
@@ -27,13 +28,17 @@ def compileAllNotify(error, log):
 
 
 def compileAll(jar, nasm, hack):
+    i = 0; erro = 0;
     print(" 1/2 Removendo arquivos antigos .hack" )
     print("  - {}".format(hack))
     clearbin(hack)
 
     print(" 2/2 Gerando novos arquivos   .hack")
-    print("  - {}".format(nasm))
-    return assemblerAll(jar, nasm, hack, True)
+    for n in nasm:
+        print("  - {}".format(n))
+        e, l = assemblerAll(jar, n, hack, True)
+        erro += e;
+    return e, l
 
 
 def callJava(jar, nasm, hack):
@@ -98,23 +103,25 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir, nasmFile=None):
                         name = par[0][:-3]
                     else:
                         name = par[0][:-5]
-
-                    nasm = nasmDir+name+".nasm"
                     hack = hackDir+name+'.hack'
                     mif  = hackDir+name+".mif"
+                    found = False
+                    for n in nasmDir:
+                        nasm = n+name+".nasm"
 
-                    # verifica se é para executar compilar
-                    # apenas um arquivo da lista
-                    if nasmFile is not None:
-                        if name != nasmFile:
-                            continue
-                       
-                    if os.path.isfile(nasm):
-                        e, l = assemblerFile(jar, nasm, hack, mif)
-                        log.append(l)
-                        if e > 0:
-                            return config.ERRO_ASSEMBLER, log
-                    else:
+                        # verifica se é para executar compilar
+                        # apenas um arquivo da lista
+                        if nasmFile is not None:
+                            if name != nasmFile:
+                                continue
+
+                        if os.path.isfile(nasm):
+                            e, l = assemblerFile(jar, nasm, hack, mif)
+                            log.append(l)
+                            if e > 0:
+                                return config.ERRO_ASSEMBLER, log
+                            found = True
+                    if found is False:
                         logError("Arquivo nasm não encontrado :")
                         logError("                - {}".format(nasm))
                         log.append({'name': mif, 'status': 'false'})
