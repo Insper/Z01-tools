@@ -19,7 +19,7 @@ from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QHeaderView, QFi
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QDesktopServices, QBrush
 from PyQt5.QtCore import QThread, QTime, QFileSystemWatcher
 from main_window import *
-from simulator_task import SimulatorTask
+from simulator_task import SimulatorTask, TEMP_PATH
 from assembler_task import AssemblerTask
 from lst_parser import LSTParser
 
@@ -146,6 +146,13 @@ class AppMain(Ui_MainWindow):
         self.config_dialog_ui.setupUi(self.config_dialog)
         self.config_dialog_ui.assemblerLineEdit.setText("../jar/Z01-Assembler.jar")
         self.config_dialog_ui.rtlLineEdit.setText("../Z01-Simulator-rtl/")
+
+    def reload_lcd(self):
+        if os.path.exists(os.path.join(TEMP_PATH, 'lcd.pgm')):
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(os.path.join(TEMP_PATH, 'lcd.pgm')), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            self.LCDButton.setIcon(icon)
+            self.LCDButton.setIconSize(QtCore.QSize(320, 240))
 
     def setup_clean_views(self, table, rows=100, caption="Dados", line_header=None):
         model = QEditorItemModel(rows, 1, self.window)
@@ -320,6 +327,7 @@ class AppMain(Ui_MainWindow):
                 file_utils.copy_model_to_file(self.rom_model, tmp_rom)
                 tmp_ram = self.get_updated_ram()
                 self.simulate(tmp_rom, tmp_ram)
+
             return False
         step = self.lst_parser.advance()
 
@@ -367,6 +375,7 @@ class AppMain(Ui_MainWindow):
         self.ram_to_leds()
 
         print("PROXIMO")
+        self.reload_lcd()
         self.last_step = step
 
     def update_line_edit(self, line_edit, new_value, ignore=False):
