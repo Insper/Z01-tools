@@ -154,6 +154,10 @@ class AppMain(Ui_MainWindow):
             self.LCDButton.setIcon(icon)
             self.LCDButton.setIconSize(QtCore.QSize(320, 240))
 
+    def clean_lcd(self):
+        if os.path.exists(os.path.join(TEMP_PATH, 'lcd.pgm')):
+            os.unlink(os.path.join(TEMP_PATH, 'lcd.pgm'))
+
     def setup_clean_views(self, table, rows=100, caption="Dados", line_header=None):
         model = QEditorItemModel(rows, 1, self.window)
         model.setHorizontalHeaderItem(0, QStandardItem(caption))
@@ -313,6 +317,7 @@ class AppMain(Ui_MainWindow):
 
     def on_proximo(self):
         if self.data_changed:
+            self.clean_lcd()
             if self.lst_parser is not None:
                 self.lst_parser.close()
 
