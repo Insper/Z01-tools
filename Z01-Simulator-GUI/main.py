@@ -16,7 +16,7 @@ import config_dialog
 
 from PyQt5.QtCore import QUrl, Qt
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QHeaderView, QFileDialog, QActionGroup, QMessageBox, QProgressDialog, QVBoxLayout
-from PyQt5.QtGui import QStandardItemModel, QStandardItem, QDesktopServices, QBrush
+from PyQt5.QtGui import QStandardItemModel, QStandardItem, QDesktopServices, QBrush, QColorConstants
 from PyQt5.QtCore import QThread, QTime, QFileSystemWatcher
 from main_window import *
 from simulator_task import SimulatorTask, TEMP_PATH
@@ -95,6 +95,8 @@ class AppMain(Ui_MainWindow):
         self.setup_actions()
         self.setup_threads()
 
+        self.LCDScreen = QtGui.QPixmap(320, 240)
+        self.LCDPainter = QtGui.QPainter(self.LCDScreen)
         self.SW = [self.SW9, self.SW8, self.SW7, self.SW6, self.SW5, self.SW4, self.SW3, self.SW2, self.SW1, self.SW0]
         self.LEDR = [self.LEDR9, self.LEDR8, self.LEDR7, self.LEDR6, self.LEDR5, self.LEDR4, self.LEDR3, self.LEDR2,
                      self.LEDR1, self.LEDR0]
@@ -148,15 +150,25 @@ class AppMain(Ui_MainWindow):
         self.config_dialog_ui.rtlLineEdit.setText("../Z01-Simulator-rtl/")
 
     def reload_lcd(self):
-        if os.path.exists(os.path.join(TEMP_PATH, 'lcd.pgm')):
-            icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(os.path.join(TEMP_PATH, 'lcd.pgm')), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            self.LCDButton.setIcon(icon)
-            self.LCDButton.setIconSize(QtCore.QSize(320, 240))
+        self.clean_lcd()
+        for i in range(16384, 21185):
+            index = self.ram_model.index(i, 0)
+            data = self.ram_model.itemFromIndex(index).text().strip()
+            x = (i - 16384) % (320 // 16)
+            y = (i - 16384) // (320 // 16)
+            if data == '1111111111111111':
+                self.LCDPainter.drawLine(x*16, y, (x*16)+15, y)
+            else:
+                for j in range(0, len(data)):
+                    if data[j] == '1':
+                        self.LCDPainter.drawPoint(x*16+j, y)
+
+        self.LCDButton.setIcon(QtGui.QIcon(self.LCDScreen))
+        self.LCDButton.setIconSize(QtCore.QSize(320, 240))
 
     def clean_lcd(self):
-        if os.path.exists(os.path.join(TEMP_PATH, 'lcd.pgm')):
-            os.unlink(os.path.join(TEMP_PATH, 'lcd.pgm'))
+        brush = QtGui.QBrush(Qt.white)
+        self.LCDPainter.fillRect(0, 0, 320, 240, brush)
 
     def setup_clean_views(self, table, rows=100, caption="Dados", line_header=None):
         model = QEditorItemModel(rows, 1, self.window)
