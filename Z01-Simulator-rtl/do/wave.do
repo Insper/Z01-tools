@@ -3,18 +3,11 @@ quietly WaveActivateNextPane {} 0
 add wave -noupdate /computador_tb/c1/MAIN_CPU/clock
 add wave -noupdate /computador_tb/c1/MAIN_CPU/instruction
 add wave -noupdate /computador_tb/c1/MAIN_CPU/REG_D/output
-add wave -noupdate /computador_tb/c1/MAIN_CPU/REG_S/output
 add wave -noupdate /computador_tb/c1/MAIN_CPU/REG_A/output
-add wave -noupdate /computador_tb/c1/MAIN_CPU/REG_S/input
-add wave -noupdate /computador_tb/c1/MAIN_CPU/REG_S/load
 add wave -noupdate /computador_tb/c1/MAIN_CPU/pcout
 add wave -noupdate /computador_tb/c1/MAIN_CPU/outM
 add wave -noupdate /computador_tb/c1/MAIN_CPU/writeM
 add wave -noupdate /computador_tb/c1/MAIN_CPU/inM
-add wave -noupdate -radix hexadecimal /computador_tb/c1/MAIN_CPU/MUX_S_D_ALU/a
-add wave -noupdate -radix hexadecimal /computador_tb/c1/MAIN_CPU/MUX_S_D_ALU/b
-add wave -noupdate -radix hexadecimal /computador_tb/c1/MAIN_CPU/MUX_S_D_ALU/sel
-add wave -noupdate -radix hexadecimal /computador_tb/c1/MAIN_CPU/MUX_S_D_ALU/q
 add wave -noupdate -radix hexadecimal /computador_tb/c1/MAIN_CPU/ULA/x
 add wave -noupdate -radix hexadecimal /computador_tb/c1/MAIN_CPU/ULA/y
 add wave -noupdate -radix hexadecimal /computador_tb/c1/MAIN_CPU/ULA/saida
