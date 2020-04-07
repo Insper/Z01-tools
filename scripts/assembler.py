@@ -65,12 +65,6 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir, nasmFile=None):
     # caminho do arquivo de configuracao
     pwd = os.path.dirname(configFile) + "/"
 
-    os.path.abspath(hackDir)
-    os.path.abspath(configFile)
-
-    # file
-    f = ""
-
     # Verificando se é diretorio
     if not os.path.exists(configFile):
         logError("Favor passar como parametro um diretorio do tipo test")
@@ -86,6 +80,7 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir, nasmFile=None):
     print(" 1/2 Removendo arquivos .hack" )
     print("  - {}".format(hackDir))
     clearbin(hackDir)
+    os.makedirs(os.path.dirname(hackDir), exist_ok=True)
 
     print(" 2/2 Gerando arquivos   .hack")
     print("  - {}".format(nasmDir))
@@ -106,6 +101,7 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir, nasmFile=None):
                     hack = hackDir+name+'.hack'
                     mif  = hackDir+name+".mif"
                     found = False
+
                     for n in nasmDir:
                         nasm = n+name+".nasm"
 
@@ -114,7 +110,6 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir, nasmFile=None):
                         if nasmFile is not None:
                             if name != nasmFile:
                                 continue
-
                         if os.path.isfile(nasm):
                             e, l = assemblerFile(jar, nasm, hack, mif)
                             log.append(l)

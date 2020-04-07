@@ -18,7 +18,7 @@ from genImg import lcdToimg
 def setRuntimeDo(time, doFile):
         for line in fileinput.input(doFile, inplace = 1):
             if "run" in line:
-                print("run "+str(time)+" ns")
+                print("run "+str(5 + time)+" ns")
             else:
                 print(line.rstrip())
 
@@ -62,7 +62,7 @@ def simulateFromTestDir(testDir, hackDir, gui, verbose, nasmFile=None,rtlDir=con
                             # usar join ?
                             ramIn = pwd+config.TST_DIR+name+"/"+name+"{}".format(i) + config.RAM_INIT_FILE
                             ramOut = pwd+config.TST_DIR+name+"/"+name+str(i) + config.RAM_END_SIMU_FILE
-                            lcdOut = pwd+config.TST_DIR+name+"/"+name+str(i) + config.LCD_PGM_FILE
+                            lcdOut = hackDir + '../lcd/' +name+str(i) + config.LCD_PGM_FILE
                             print(os.path.relpath(mif) + " teste : " + str(i))
 
                             if os.path.isfile(ramIn):
@@ -134,6 +134,8 @@ def simulateCPU(ramIn, romIn, ramOut, lcdOut, time, debug, verbose, rtlDir=confi
     # executa simulacao no modelsim
     owd = os.getcwd()
     os.chdir(rtlDir)
+
+
 
     os.system(config.PATH_VSIM  + c + " -do " + PATH_DO + v)
     os.chdir(owd)

@@ -38,6 +38,8 @@ class lcdToimg(object):
                                 n = n+1
     def saveImg(self):
         print(self.imgOut)
+        os.makedirs(os.path.dirname(self.imgOut), exist_ok=True)
+
         with open(self.imgOut, 'wb') as fw:
             fw.write(bytearray(self.ppm_header, 'ascii'))
             for n in self.img:
