@@ -116,6 +116,8 @@ class AppMain(Ui_MainWindow):
         self.rom_watcher = QFileSystemWatcher()
         self.rom_watcher.fileChanged.connect(self.reload_rom)
         self.editor_converting = False
+        self.label_S.hide()
+        self.lineEdit_S.hide()
         self.label_A.setStyleSheet('QLabel { font-size: 12pt; }')
         self.label_D.setStyleSheet('QLabel { font-size: 12pt; }')
         self.label_S.setStyleSheet('QLabel { font-size: 12pt; }')
@@ -124,7 +126,7 @@ class AppMain(Ui_MainWindow):
         self.toolBar.addSeparator()
         self.lineEdit_A.setStyleSheet(self.style_register())
         self.lineEdit_D.setStyleSheet(self.style_register())
-        self.lineEdit_S.setStyleSheet(self.style_register())
+        #self.lineEdit_S.setStyleSheet(self.style_register())
         self.lineEdit_inM.setStyleSheet(self.style_register())
         self.lineEdit_outM.setStyleSheet(self.style_register())
         self.on_new()
@@ -342,7 +344,7 @@ class AppMain(Ui_MainWindow):
             return
 
         self.update_line_edit(self.lineEdit_A, step["s_regAout"])
-        self.update_line_edit(self.lineEdit_S, step["s_regSout"])
+        #self.update_line_edit(self.lineEdit_S, step["s_regSout"])
         self.update_line_edit(self.lineEdit_D, step["s_regDout"])
         self.update_line_edit(self.lineEdit_inM, step["inM"])
         self.update_line_edit(self.lineEdit_outM, step["outM"])
@@ -583,7 +585,7 @@ class AppMain(Ui_MainWindow):
     def clear_simulation(self):
         self.last_step = None
         self.update_line_edit(self.lineEdit_A, "0000000000000000", True)
-        self.update_line_edit(self.lineEdit_S, "0000000000000000", True)
+        #self.update_line_edit(self.lineEdit_S, "0000000000000000", True)
         self.update_line_edit(self.lineEdit_D, "0000000000000000", True)
         self.update_line_edit(self.lineEdit_inM, "0000000000000000", True)
         self.update_line_edit(self.lineEdit_outM, "0000000000000000", True)
