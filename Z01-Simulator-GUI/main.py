@@ -253,6 +253,7 @@ class AppMain(Ui_MainWindow):
         self.clear_simulation()
 
     def on_voltar_inicio(self):
+        self.keys_set_enable(True)
         self.data_changed = True
         self.clear_simulation()
 
