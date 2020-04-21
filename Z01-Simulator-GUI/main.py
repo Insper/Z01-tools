@@ -155,6 +155,10 @@ class AppMain(Ui_MainWindow):
             icon.addPixmap(QtGui.QPixmap(os.path.join(TEMP_PATH, 'lcd.pgm')), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             self.LCDButton.setIcon(icon)
             self.LCDButton.setIconSize(QtCore.QSize(320, 240))
+        else:
+            icon = QtGui.QIcon()
+            self.LCDButton.setIcon(icon)
+
 
     def clean_lcd(self):
         if os.path.exists(os.path.join(TEMP_PATH, 'lcd.pgm')):
@@ -184,6 +188,7 @@ class AppMain(Ui_MainWindow):
         self.actionAbrir.triggered.connect(self.on_load)
         self.actionProximo.triggered.connect(self.on_proximo)
         self.actionExecutarFim.triggered.connect(self.on_executar_fim)
+        self.actionIrFim.triggered.connect(self.on_ir_fim)
         self.actionParar.triggered.connect(self.on_parar)
         self.actionEraseRAM.triggered.connect(self.on_clear_ram)
         self.actionVoltarInicio.triggered.connect(self.on_voltar_inicio)
@@ -253,6 +258,8 @@ class AppMain(Ui_MainWindow):
         self.clear_simulation()
 
     def on_voltar_inicio(self):
+        self.clean_lcd()
+        self.reload_lcd()
         self.keys_set_enable(True)
         self.data_changed = True
         self.clear_simulation()
@@ -263,6 +270,9 @@ class AppMain(Ui_MainWindow):
 
     def on_executar_fim(self):
         self.step_timer.start(self.STEP_TIMER_IN_MS)
+
+    def on_ir_fim(self):
+        self.step_timer.start(0) 
 
     def show(self):
         self.window.show()
