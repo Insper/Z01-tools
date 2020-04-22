@@ -2,16 +2,18 @@
 
 # Form implementation generated from reading ui file 'config_dialog.ui'
 #
-# Created by: PyQt5 UI code generator 5.10
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(482, 241)
+        Dialog.resize(632, 292)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.verticalLayout = QtWidgets.QVBoxLayout()
@@ -44,6 +46,18 @@ class Ui_Dialog(object):
         self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.rtlLineEdit)
         self.verticalLayout.addLayout(self.formLayout)
         self.verticalLayout_2.addLayout(self.verticalLayout)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label_time = QtWidgets.QLabel(Dialog)
+        self.label_time.setObjectName("label_time")
+        self.horizontalLayout.addWidget(self.label_time)
+        self.simTime = QtWidgets.QSpinBox(Dialog)
+        self.simTime.setMinimum(1000)
+        self.simTime.setMaximum(100000)
+        self.simTime.setProperty("value", 1000)
+        self.simTime.setObjectName("simTime")
+        self.horizontalLayout.addWidget(self.simTime)
+        self.verticalLayout_2.addLayout(self.horizontalLayout)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -57,4 +71,4 @@ class Ui_Dialog(object):
         self.simGUIBox.setText(_translate("Dialog", "Abrir GUI do Modelsim após simular"))
         self.procurarButton.setText(_translate("Dialog", "Procurar"))
         self.pastaRTL.setText(_translate("Dialog", "Pasta RTL (Z01):"))
-
+        self.label_time.setText(_translate("Dialog", "Tempo Simulação"))

@@ -478,7 +478,7 @@ class AppMain(Ui_MainWindow):
 
         self.simulator_task = SimulatorTask("temp/", False, self.config_dialog_ui.simGUIBox.isChecked(), self.config_dialog_ui.rtlLineEdit.text())
         lst_out = tempfile.SpooledTemporaryFile(max_size=self.TEMP_MAX_RAM_USE, mode="w+")
-        self.simulator_task.setup(rom_file, ram_file, lst_out, 100*10+10)
+        self.simulator_task.setup(rom_file, ram_file, lst_out, int(self.config_dialog_ui.simTime.text()))
         self.simulator_task.finished.connect(self.simulation_end)
         self.simulator_task.moveToThread(self.sim_thread)
         self.sim_thread.started.connect(self.simulator_task.run)
