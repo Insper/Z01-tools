@@ -7,7 +7,7 @@ import binascii
 
 def z01_valid_assembly(line):
     line = line.strip()
-    instrs = ["mov", "lea", "sub", "add", "jmp", "je", "jg", "jl", "jne", "jle", "jge", "nop", "rsub", "inc", "dec", "not", "neg", "and", "or"]
+    instrs = ["mov", "lea", "sub", "add", "jmp", "je", "jg", "jl", "jne", "jle", "jge", "nop", "rsub", "inc", "dec", "not", "neg", "and", "orw"]
     find = line.find(" ")
     if find == -1:
         find = len(line)
