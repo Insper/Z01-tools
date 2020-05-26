@@ -1,0 +1,22 @@
+-- Elementos de Sistemas
+-- by Luciano Soares
+-- Mux16.vhd
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity Mux16 is
+	port ( 
+			a:   in  STD_LOGIC_VECTOR(15 downto 0);
+			b:   in  STD_LOGIC_VECTOR(15 downto 0);
+			sel: in  STD_LOGIC;
+			q:   out STD_LOGIC_VECTOR(15 downto 0));
+end entity;
+
+architecture arch of Mux16 is
+begin
+
+	with sel select
+	q <= a when '0',
+       b when others;
+end architecture;
