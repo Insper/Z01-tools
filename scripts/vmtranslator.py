@@ -27,34 +27,36 @@ def callJava(jar, vm, nasm, bootstrap=False):
     return(err)
 
 
-def vmtranslator(bootstrap, vm, nasm, jar=config.VMTRANSLATOR_JAR):
-
-    pwd = os.path.dirname(os.path.abspath(__file__))
+def vmtranslator(bootstrap, vmDir, nasm, jar=config.VMTRANSLATOR_JAR):
 
     if not os.path.exists(os.path.dirname(nasm)):
         os.makedirs(os.path.dirname(nasm))
 
-    if(os.path.isdir(vm)):
-        if(os.path.isdir(nasm)):
-            for filename in os.listdir(vm):
-                if(os.path.isdir(vm+'/'+filename)):
-                    nNasm = nasm+filename+".nasm"
-                else:
-                    nNasm = nasm+filename[:-3]+".nasm"
-                nVM = vm+filename
-                if not os.path.basename(nVM).startswith('.'):
-                    print("Compiling {} to {}".format(os.path.basename(nVM), os.path.basename(nNasm)))
+    if not isinstance(vmDir, list):
+        vmDir = [vmDir, '']
 
-                    rtn = callJava(jar, nVM, nNasm, bootstrap)
-                    if(rtn > 0):
-                        return(rtn)
+    for vm in vmDir:
+        if(os.path.isdir(vm)):
+            if(os.path.isdir(nasm)):
+                for filename in os.listdir(vm):
+                    if(os.path.isdir(vm+'/'+filename)):
+                        nNasm = nasm+filename+".nasm"
+                    else:
+                        nNasm = nasm+filename[:-3]+".nasm"
+                    nVM = vm+filename
+                    if not os.path.basename(nVM).startswith('.'):
+                        print("Compiling {} to {}".format(os.path.basename(nVM), os.path.basename(nNasm)))
+
+                        rtn = callJava(jar, nVM, nNasm, bootstrap)
+                        if(rtn > 0):
+                            return(rtn)
+            else:
+                logError("output must be folder for folder input!")
+        # é arquivo
         else:
-            logError("output must be folder for folder input!")
-    # é arquivo
-    else:
-        nNasm = nasm+".nasm"
-        rtn = callJava(jar, vm, nNasm)
-        return(rtn)
+            nNasm = nasm+".nasm"
+            rtn = callJava(jar, vm, nNasm)
+            return(rtn)
 
 def vmtranslatorFromTestDir(jar, testDir, vmDir, nasmDir, bootstrap=False):
 

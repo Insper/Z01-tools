@@ -102,9 +102,13 @@ def assemblerFromTestDir(jar, testDir, nasmDir, hackDir, nasmFile=None):
                     mif  = hackDir+name+".mif"
                     found = False
 
+                    if isinstance(nasmDir, list):
+                        nasmDir = nasmDir
+                    else:
+                        nasmDir = [nasmDir, '']
+
                     for n in nasmDir:
                         nasm = n+name+".nasm"
-
                         # verifica se é para executar compilar
                         # apenas um arquivo da lista
                         if nasmFile is not None:

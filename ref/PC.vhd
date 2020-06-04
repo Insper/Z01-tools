@@ -55,7 +55,7 @@ begin
    			elsif load = '1' then
 	  			count := STD_LOGIC_VECTOR(to_unsigned(to_integer(unsigned(input)), 16));
 	 		elsif increment = '1' then
-				count := STD_LOGIC_VECTOR(to_unsigned(to_integer(unsigned( count )) + 2, 16));
+				count := STD_LOGIC_VECTOR(to_unsigned(to_integer(unsigned( count )) + 1, 16));
 	  		end if;
 	 	end if;
 		output <= count;
