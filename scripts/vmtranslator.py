@@ -36,9 +36,10 @@ def vmtranslator(bootstrap, vmDir, nasm, jar=config.VMTRANSLATOR_JAR):
         vmDir = [vmDir, '']
 
     for vm in vmDir:
-        if(os.path.isdir(vm)):
+        if(vm != ''):
             if(os.path.isdir(nasm)):
                 for filename in os.listdir(vm):
+                    print(filename)
                     if(os.path.isdir(vm+'/'+filename)):
                         nNasm = nasm+filename+".nasm"
                     else:
