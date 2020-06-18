@@ -19,7 +19,6 @@ import util
 def callJava(jar, vm, nasm, bootstrap=False):
 
     command = "java -jar " + jar + " " + vm + " -o " + nasm
-
     if not bootstrap:
         command += " -n"
     proc = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
@@ -47,17 +46,18 @@ def vmtranslator(bootstrap, vmDir, nasm, jar=config.VMTRANSLATOR_JAR):
                     nVM = vm+filename
                     if not os.path.basename(nVM).startswith('.'):
                         print("Compiling {} to {}".format(os.path.basename(nVM), os.path.basename(nNasm)))
-
                         rtn = callJava(jar, nVM, nNasm, bootstrap)
                         if(rtn > 0):
                             return(rtn)
             else:
                 logError("output must be folder for folder input!")
         # é arquivo
-        else:
-            nNasm = nasm+".nasm"
-            rtn = callJava(jar, vm, nNasm)
-            return(rtn)
+        #else:
+        #    
+        #    import pdb; pdb.set_trace()
+        #    nNasm = nasm+".nasm"
+        #    rtn = callJava(jar, vm, nNasm)
+        #    return(rtn)
 
 def vmtranslatorFromTestDir(jar, testDir, vmDir, nasmDir, bootstrap=False):
 
