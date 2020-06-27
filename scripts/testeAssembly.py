@@ -77,15 +77,24 @@ def compareRam(name, ramEnd, ramEndSimulation):
                 validacao[int(alocacao[0].strip())] = alocacao[1].strip()
 
     # compara as memórias criadas buscando por diferencas
+    log = []
+    erro = False
     for e, v in ram.items():
-            if(ram[e] != validacao[e]):
-                    print(colored(" FALHOU: {}".format(name) , 'red'))
-                    print(" RAM     : {}".format(e))
-                    print(" esperado: " + ram[e])
-                    print(" obtido  : " + validacao[e])
-                    print(colored(" ---------------------", 'red'))
-                    return(False)
-    return(True)
+        status = 'green'
+        if(ram[e] != validacao[e]):
+            status = 'red'
+            erro = True
+        log.append({'ram':e,'esperado':ram[e],'obtido':validacao[e],'status':status})
+
+    if erro is True:
+        print(colored(" FALHOU: {}".format(name) , 'red'))
+        print("|-------------------------------------------------- |")
+        print("| RAM \t | Esperado \t\t | Obtido \t    |")
+        print("|-------------------------------------------------- |")
+        for e in log:
+            print(colored("| {} \t | {} \t | {} |".format(e['ram'],e['esperado'],e['obtido']), e['status']))
+
+    return(not erro)
 
 
 def compareFromTestDir(testDir, nasmFile=None):
