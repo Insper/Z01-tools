@@ -49,7 +49,7 @@ class vhdlScript(object):
                 ls = l.strip()
                 if ls and ('#' not in l):
                     if ls[-4:] == '.vhd':
-                        self.addSrcFile(tst + "tst/tb_" + ls)
+                        self.addSrcFile(tst + "testes/tb_" + ls)
             return(True)
         else:
             return(False)

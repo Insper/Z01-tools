@@ -83,7 +83,7 @@ sys.path.insert(0,PROJ_I_PATH)
 ######################################################
 
 # config file
-CONFIG_FILE = "config.txt"
+CONFIG_FILE = "config_testes.txt"
 
 # TST DIR files
 TST_DIR = "tst/"
