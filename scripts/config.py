@@ -86,7 +86,7 @@ sys.path.insert(0,PROJ_I_PATH)
 CONFIG_FILE = "config_testes.txt"
 
 # TST DIR files
-TST_DIR = "tst/"
+TST_DIR = "tests/"
 
 # RAM files
 RAM_INIT_FILE     = "_in.mif"

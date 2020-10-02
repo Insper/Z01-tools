@@ -25,7 +25,7 @@ def openConfigFile(testDir):
         f = open(configFile, 'r')
         return(f)
     except:
-        logError("Arquivo config.txt não encontrado")
+        logError("Arquivo teste_config.txt não encontrado")
         return(False)
 
 def parseConfigFile(testDir, nasmFile=None ):

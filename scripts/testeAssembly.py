@@ -33,7 +33,7 @@ def clearTestDir(testDir):
                             nTest = int(par[1])
                             for i in range (0, nTest):
                                 nameTest   = name + str(i)
-                                ramEndSimu = pwd + "tst/" + name + "/" + nameTest + config.RAM_END_SIMU_FILE
+                                ramEndSimu = pwd + config.TST_DIR + name + "/" + nameTest + config.RAM_END_SIMU_FILE
                                 try:
                                     os.remove(ramEndSimu)
                                 except:
@@ -104,14 +104,13 @@ def compareFromTestDir(testDir, nasmFile=None):
     pwd = os.path.dirname(configFile)+"/"
     log = []
     error = 0
-
     f = util.openConfigFile(testDir)
-
     if f is not False:
         for l in f:
             if len(l.strip()):
                 if l.strip()[0]!='#':
                     if (l.strip().find('.nasm') > 0) or (l.strip().find('.vm') > 0):
+
                         par   = l.rstrip().split()
                         if(l.strip().find('.vm') > 0 ):
                             name = par[0][:-3]
@@ -127,8 +126,9 @@ def compareFromTestDir(testDir, nasmFile=None):
                            
                         for i in range (0, nTest):
                             nameTest   = name + str(i)
-                            ramEnd     = pwd + "/tst/" + name + "/" + name + "{}".format(i) + config.RAM_END_FILE
-                            ramEndSimu = pwd + "/tst/" + name + "/" + nameTest + config.RAM_END_SIMU_FILE
+                            ramEnd     = pwd + config.TST_DIR + name + "/" + name + "{}".format(i) + config.RAM_END_FILE
+                            ramEndSimu = pwd + config.TST_DIR + name + "/" + nameTest + config.RAM_END_SIMU_FILE
+
                             if(os.path.isfile(ramEnd) and os.path.isfile(ramEndSimu)):
                                 print(' - Testando {}'.format(name))
                                 rtn = compareRam(nameTest, ramEnd, ramEndSimu)
