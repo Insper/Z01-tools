@@ -124,16 +124,14 @@ class report(object):
     def send(self):
         try:
             for n in self.testData:
-                url = '/'+self.groupId+'/'+self.proj+'/'+n['name']+'/'+n['ts']
-
-                post_id = {'group':self.groupId, 'project': self.proj, 'test': n['name'], 'branch': self.branchName}
+                post_id = {'tag':SEMESTRE_ID, 'group':self.groupId, 'project': self.proj, 'test': n['name'], 'branch': self.branchName}
                 ref = self.db.tests.find_one(post_id)
                 if ref is None:
                     post_id['created'] = datetime.now()
                     post_id['runs'] = []
                     self.db.tests.insert(post_id)
                     ref = self.db.tests.find_one(post_id)
-
+                import pdb; pdb.set_trace()
                 ref['updated'] = datetime.now()
                 ref['Travis'] = str(self.Travis)
                 ref['status'] = n['status']

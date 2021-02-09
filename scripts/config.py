@@ -41,6 +41,8 @@ NOTIFY_IMAGES  = TOOL_SCRIPT_PATH + '/data/'
 
 ######################################################
 
+SEMESTRE_ID = '21a'
+
 PROJ_B_NAME = 'Logica Combinacional'
 PROJ_C_NAME = 'Unidade Logica Aritmetica'
 PROJ_D_NAME = 'Logica Sequencial'
