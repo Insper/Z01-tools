@@ -131,7 +131,6 @@ class report(object):
                     post_id['runs'] = []
                     self.db.tests.insert(post_id)
                     ref = self.db.tests.find_one(post_id)
-                import pdb; pdb.set_trace()
                 ref['updated'] = datetime.now()
                 ref['Travis'] = str(self.Travis)
                 ref['status'] = n['status']
